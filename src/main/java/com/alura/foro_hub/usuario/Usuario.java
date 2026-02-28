@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Table(name = "usuarios")
 @Entity(name = "Usuario")
 @Getter
@@ -21,8 +23,15 @@ public class Usuario {
     private Long id;
 
     private String nombre;
+
+    @Column(unique = true, nullable = false)
     private String email;
     private String contraseña;
 
-    private Perfil perfiles;
+    @ManyToMany(fetch = FetchType.EAGER)//perfiles se cargaran inmediatamente junto con usuarios
+    @JoinTable(
+            name = "perfiles_de_usuarios",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "perfil_id"))
+    private List<Perfil> perfiles;//lista solo en usuario, relacion unidireccional, no necesito mapped by en perfil
 }
