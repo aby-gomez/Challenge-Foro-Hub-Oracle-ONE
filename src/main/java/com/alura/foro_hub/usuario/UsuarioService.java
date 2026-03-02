@@ -15,13 +15,13 @@ import java.util.Optional;
 public class UsuarioService {
 
     @Autowired
-    UsuarioRepository userRepository;
+    private UsuarioRepository userRepository;
 
     @Autowired
-    PerfilRepository perfilRepository;
+    private PerfilRepository perfilRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     public Usuario registrarUsuario(DtoRegistroUsuario datos){
 

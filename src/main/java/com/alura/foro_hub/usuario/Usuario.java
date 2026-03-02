@@ -4,9 +4,13 @@ import com.alura.foro_hub.perfil.Perfil;
 import com.alura.foro_hub.perfil.Rol;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Table(name = "usuarios")
@@ -16,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 //overrida de equals y hash
 @EqualsAndHashCode(of = "id")
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,4 +54,38 @@ public class Usuario {
         this.contraseña = encoder.encode(passwordPlana);
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getPassword() {
+        return contraseña;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 }
