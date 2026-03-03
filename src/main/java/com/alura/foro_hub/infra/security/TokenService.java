@@ -14,6 +14,7 @@ import java.time.ZoneOffset;
 
 @Service
 public class TokenService {
+    final String ISSUER = "Foro Hub";
 
     @Value("${api.security.token.secret}")//configurado en aplication properties
     private String secret;
@@ -23,7 +24,7 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);//algoritmo de generacion de tokens ecibe un único parámetro, que es una contraseña específica de nuestro servidor para firmar el token
             return JWT.create()
-                    .withIssuer("Foro Hub")//que servidor firma el token
+                    .withIssuer(ISSUER)//que servidor firma el token
                     .withSubject(usuario.getEmail())//persona que se autentico
                     .withExpiresAt(fechaExpiracion())
                     .sign(algorithm);
@@ -44,7 +45,7 @@ public class TokenService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
                     // specify any specific claim validations
-                    .withIssuer("Foro Hub")//que servidor creo el token
+                    .withIssuer(ISSUER)//que servidor creo el token
                     // reusable verifier instance
                     .build()
                     .verify(tokenJWT)

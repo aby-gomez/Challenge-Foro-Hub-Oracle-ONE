@@ -4,5 +4,8 @@ public enum Rol {
     ADMINISTRADOR,
     PROFESOR,
     ESTUDIANTE,
-    MODERADOR
+    MODERADOR;
+
+
+
 }

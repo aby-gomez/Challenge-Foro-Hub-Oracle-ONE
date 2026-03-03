@@ -1,5 +1,6 @@
 package com.alura.foro_hub.infra.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,6 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration//anotacion de spring boot
 @EnableWebSecurity //indica que omdificaremos spring security
 public class SecurityConfiguration {
+
+
     @Bean//anotación permite que Spring reconozca que esta clase debe ser cargada y esté disponible para que Spring Security la use.
     //para encriptar la contraseña
     public PasswordEncoder passwordEncoder() {
@@ -27,6 +30,9 @@ public class SecurityConfiguration {
         return configuration.getAuthenticationManager();
     }
 
+    @Autowired
+    SecurityFilter securityFilter;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http.csrf(csrf -> csrf.disable())//desabilitamos  ataques que utiliza cookies dle navegador , al  ya tener un sistema stateless estamos protegiso contra esos ataques
@@ -37,7 +43,7 @@ public class SecurityConfiguration {
 
                   req.anyRequest().authenticated();//cualquier otra request debe estar autenticada
                 })
-               // .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)//ejecuta primero el filtro que creamos y luego el de spring
+               .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)//ejecuta antes el filtro que cree, luego el usernamepassword...
                 .build();//al decirle que es stateless no nos reenvia al apagina de inicio de sesion de defecto de spring security
     }
 }
