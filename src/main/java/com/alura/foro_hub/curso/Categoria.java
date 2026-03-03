@@ -1,5 +1,7 @@
 package com.alura.foro_hub.curso;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public enum Categoria {
     TECNOLOGIA,
 
@@ -13,5 +15,15 @@ public enum Categoria {
 
     SALUD_Y_BIENESTAR,
 
-    OFICIOS_Y_HOBBIES
+    OFICIOS_Y_HOBBIES;
+
+    @JsonCreator//si se lanza la excepcion sprinv la envuelve con un HttpMessageNotReadableException
+    public static Categoria fromString(String categoria){
+        for(Categoria c : Categoria.values()){
+            if(c.name().equalsIgnoreCase(categoria)){
+                return c;
+            }
+        }
+        throw new IllegalArgumentException("Ninguna categoria encontrada: " + categoria);
+    }
 }

@@ -1,5 +1,6 @@
 package com.alura.foro_hub.topico;
 
+import com.alura.foro_hub.curso.Categoria;
 import com.alura.foro_hub.curso.Curso;
 import com.alura.foro_hub.respuesta.Respuesta;
 import com.alura.foro_hub.usuario.Usuario;
@@ -10,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "topicos")
@@ -40,8 +42,19 @@ public class Topico {
     private Curso curso;
 
     @OneToMany(mappedBy = "topico")//define el atributo que va a ser usado en la otra clase(Respuesta) para mapear a la variable mappedby, la dueña de la relacion es respuesta
-    private List<Respuesta> respuestas;
+    private List<Respuesta> respuestas= new ArrayList<>();
 
+    public Topico(DtoCrearTopico datos, Usuario usuario){
+        this.titulo= datos.titulo();
+        this.mensaje = datos.mensaje();
+        this.fechaCreacion = Instant.now();
+        this.status = StatusTopico.ABIERTO;
+        this.autor = usuario;
+    }
+
+    public void setCurso(Curso curso){
+        this.curso = curso;
+    }
 
 }
 

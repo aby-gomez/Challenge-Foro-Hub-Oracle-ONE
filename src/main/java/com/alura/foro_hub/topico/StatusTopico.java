@@ -1,7 +1,7 @@
 package com.alura.foro_hub.topico;
 
 public enum StatusTopico {
-    NO_RESPONDIDO,
+    ABIERTO,
     NO_SOLUCIONADO,
     SOLUCIONADO,
     CERRADO;
