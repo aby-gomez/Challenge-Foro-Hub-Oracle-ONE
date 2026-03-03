@@ -1,5 +1,6 @@
 package com.alura.foro_hub.usuario;
 
+import com.alura.foro_hub.infra.security.DatosTokenJWT;
 import com.alura.foro_hub.infra.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +19,20 @@ public class AuthController {
     @Autowired
     private AuthenticationManager manager;
 
-
+    @Autowired
+    private TokenService tokenService;
 
     @PostMapping
     public ResponseEntity iniciarSesion(@RequestBody @Valid DtoLoginUsuario datos){
-
+        //Este DTO se transforma en un DTO propio de Spring Security llamado
+        //UsernamePasswordAuthenticationToken , específico de Spring
+        //Security. Esto permite que un AuthenticationManager pueda
+        //reconocerlo.
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(datos.email(), datos.contraseña()); //solicita Usuario y contrsaeña
         Authentication usuarioAutenticado = manager.authenticate(authenticationToken);//authenticate pide un token en formato especifico especifico, del tipo usernamepasswordetc
 
-       // var tokenJWT = tokenService.generarToken((Usuario) usuarioAutenticado.getPrincipal());
-        return ResponseEntity.ok().build();
+        String tokenJWT = tokenService.generarToken((Usuario) usuarioAutenticado.getPrincipal());
+        return ResponseEntity.ok(new DatosTokenJWT(tokenJWT));
 
     }
 
