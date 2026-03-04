@@ -13,7 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @RestController//habilita esta clase como un controlador REST y que pueda interceptar peticiones al servidor
-@RequestMapping("/usuario")
+@RequestMapping("/usuarios")
 public class UsuarioController {
     @Autowired
     private UsuarioService service;

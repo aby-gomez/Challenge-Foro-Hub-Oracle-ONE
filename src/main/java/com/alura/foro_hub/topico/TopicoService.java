@@ -7,6 +7,8 @@ import com.alura.foro_hub.topico.validadores.ValidadorDeTopico;
 import com.alura.foro_hub.usuario.Usuario;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
@@ -45,5 +47,9 @@ public class TopicoService {
             return topicoRepository.save(topico);
 
 
+    }
+
+    public Page<Topico> listarTopicos(Pageable paginacion) {
+        return topicoRepository.findAll(paginacion);
     }
 }
