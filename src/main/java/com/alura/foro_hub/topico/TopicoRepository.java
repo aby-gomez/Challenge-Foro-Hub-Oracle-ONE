@@ -2,6 +2,8 @@ package com.alura.foro_hub.topico;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TopicoRepository extends JpaRepository<Topico,Long> {
+import java.util.Optional;
 
+public interface TopicoRepository extends JpaRepository<Topico,Long> {
+            boolean existsByTituloAndMensaje(String titulo, String mensaje);
 }
