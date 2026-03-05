@@ -11,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.alura.foro_hub.infra.exceptions.ValidationException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.naming.AuthenticationException;
 
@@ -37,19 +38,24 @@ public class GestorDeErrores {
     //al no encontrar un curso con ese nombre error 404 o cualquier otro recurso no encontrado
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity gestionarError404(EntityNotFoundException e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
     //si se envio mal escrita la categoria
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity gestionarError40(IllegalArgumentException e){
-
+    public ResponseEntity gestionarErrorJson(IllegalArgumentException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity tratarErrorDeValidacion(ValidationException e) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
+
+    // para errores en la url (como id que no es número)
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity gestionarErrorTipoParametro(MethodArgumentTypeMismatchException e) {
+        return ResponseEntity.badRequest().body(String.format("El parámetro '%s' debe ser de tipo numero", e.getName()));
     }
 
 }

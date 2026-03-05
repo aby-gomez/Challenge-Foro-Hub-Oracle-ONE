@@ -1,8 +1,8 @@
 package com.alura.foro_hub.topico;
 
-import com.alura.foro_hub.curso.Categoria;
 import com.alura.foro_hub.curso.Curso;
 import com.alura.foro_hub.respuesta.Respuesta;
+import com.alura.foro_hub.topico.dto.DtoCrearTopico;
 import com.alura.foro_hub.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

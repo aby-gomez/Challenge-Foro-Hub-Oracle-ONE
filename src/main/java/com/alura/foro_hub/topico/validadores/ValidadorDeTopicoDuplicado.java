@@ -1,6 +1,6 @@
 package com.alura.foro_hub.topico.validadores;
 
-import com.alura.foro_hub.topico.DtoCrearTopico;
+import com.alura.foro_hub.topico.dto.DtoCrearTopico;
 import com.alura.foro_hub.topico.TopicoRepository;
 import com.alura.foro_hub.infra.exceptions.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;

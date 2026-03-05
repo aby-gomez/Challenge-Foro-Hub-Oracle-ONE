@@ -4,6 +4,7 @@ import com.alura.foro_hub.curso.Curso;
 import com.alura.foro_hub.curso.CursoRepository;
 import com.alura.foro_hub.curso.validadores.ValidadorDeCurso;
 import com.alura.foro_hub.infra.exceptions.ValidationException;
+import com.alura.foro_hub.topico.dto.DtoCrearTopico;
 import com.alura.foro_hub.topico.validadores.ValidadorDeTopico;
 import com.alura.foro_hub.usuario.Usuario;
 import jakarta.persistence.EntityNotFoundException;
@@ -11,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -74,5 +73,13 @@ public class TopicoService {
             throw new ValidationException("No hay resultados para la busqueda");//verificar que no devuelve un error ya que no lo es
         }
        return lista;
+    }
+
+    public Topico detallarTopico(Long id) {
+        Optional<Topico> topico = topicoRepository.findById(id);
+        if(topico.isEmpty()){
+            throw new EntityNotFoundException("topico no encontrado");
+        }
+        return topico.get();
     }
 }

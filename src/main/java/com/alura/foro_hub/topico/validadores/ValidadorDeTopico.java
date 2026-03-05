@@ -1,6 +1,6 @@
 package com.alura.foro_hub.topico.validadores;
 
-import com.alura.foro_hub.topico.DtoCrearTopico;
+import com.alura.foro_hub.topico.dto.DtoCrearTopico;
 
 public interface ValidadorDeTopico {
     void validarTopico(DtoCrearTopico datos);

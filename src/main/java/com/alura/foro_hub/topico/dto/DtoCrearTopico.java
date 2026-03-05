@@ -1,6 +1,5 @@
-package com.alura.foro_hub.topico;
+package com.alura.foro_hub.topico.dto;
 
-import com.alura.foro_hub.curso.Curso;
 import com.alura.foro_hub.curso.DtoCurso;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

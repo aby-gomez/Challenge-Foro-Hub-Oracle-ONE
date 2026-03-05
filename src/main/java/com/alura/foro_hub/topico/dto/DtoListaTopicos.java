@@ -1,4 +1,7 @@
-package com.alura.foro_hub.topico;
+package com.alura.foro_hub.topico.dto;
+
+import com.alura.foro_hub.topico.StatusTopico;
+import com.alura.foro_hub.topico.Topico;
 
 import java.time.Instant;
 
