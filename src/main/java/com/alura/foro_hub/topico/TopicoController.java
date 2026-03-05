@@ -15,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -36,11 +37,16 @@ public class TopicoController {
 
     @GetMapping
     //Pageable ,  es capaz de contener todos los metadatos necesarios para implementar la paginación en una lista, orden asc por defecto
-    public ResponseEntity listarTopicos(@PageableDefault(size = 10, sort={"fechaCreacion"}) Pageable paginacion){
-        //page provee metodo map que convierte automaticamente en dto, el  objeto Page<T> ya contiene la lista de productos
+    public ResponseEntity listarTopicos(@PageableDefault(size = 10, sort={"fechaCreacion"}) Pageable paginacion, @RequestParam(required = false) Map<String,String> allParams){
+        //si no hay parametros de busqueda
+        if(allParams.isEmpty()){
+            //page provee metodo map que convierte automaticamente en dto, el  objeto Page<T> ya contiene la lista de productos
             Page<DtoListaTopicos> listaDeTopicos = service.listarTopicos(paginacion).map(DtoListaTopicos::new);
-
             return ResponseEntity.ok(listaDeTopicos);
+        }
+        //si hay parametros
+        Page<DtoListaTopicos> listaDeTopicosFiltrados =(service.listarTopicosConFiltro(allParams,paginacion)).map(DtoListaTopicos::new);
+        return ResponseEntity.ok(listaDeTopicosFiltrados);
 
     }
 
