@@ -2,6 +2,7 @@ package com.alura.foro_hub.topico;
 
 import com.alura.foro_hub.curso.Curso;
 import com.alura.foro_hub.respuesta.Respuesta;
+import com.alura.foro_hub.topico.dto.DtoActualizarTopico;
 import com.alura.foro_hub.topico.dto.DtoCrearTopico;
 import com.alura.foro_hub.usuario.Usuario;
 import jakarta.persistence.*;
@@ -56,5 +57,9 @@ public class Topico {
         this.curso = curso;
     }
 
+    public void actualizarTopico(DtoActualizarTopico datos) {
+        this.titulo = datos.titulo();
+        this.mensaje = datos.mensaje();
+    }
 }
 

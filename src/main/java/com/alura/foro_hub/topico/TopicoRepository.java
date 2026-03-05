@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface TopicoRepository extends JpaRepository<Topico,Long>, JpaSpecificationExecutor<Topico> {
             boolean existsByTituloAndMensaje(String titulo, String mensaje);
+
+         Optional<Topico> findByIdAndAutorEmail(Long id, String email);
 }

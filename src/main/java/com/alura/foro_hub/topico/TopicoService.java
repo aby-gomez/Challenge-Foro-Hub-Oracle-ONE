@@ -4,6 +4,7 @@ import com.alura.foro_hub.curso.Curso;
 import com.alura.foro_hub.curso.CursoRepository;
 import com.alura.foro_hub.curso.validadores.ValidadorDeCurso;
 import com.alura.foro_hub.infra.exceptions.ValidationException;
+import com.alura.foro_hub.topico.dto.DtoActualizarTopico;
 import com.alura.foro_hub.topico.dto.DtoCrearTopico;
 import com.alura.foro_hub.topico.validadores.ValidadorDeTopico;
 import com.alura.foro_hub.usuario.Usuario;
@@ -81,5 +82,18 @@ public class TopicoService {
             throw new EntityNotFoundException("topico no encontrado");
         }
         return topico.get();
+    }
+
+    public Topico actualizarTopico(Long id, Usuario usuarioLogeado, DtoActualizarTopico datos) {
+
+        Optional<Topico> topico = topicoRepository.findByIdAndAutorEmail(id,usuarioLogeado.getEmail());
+        if(topico.isEmpty()){
+            throw new EntityNotFoundException("topico no encontrado o no tenes permisos para editar ese tópico");
+        }
+        Topico topicoExiste = topico.get();
+        topicoExiste.actualizarTopico(datos);
+
+
+        return topicoRepository.save(topicoExiste);
     }
 }

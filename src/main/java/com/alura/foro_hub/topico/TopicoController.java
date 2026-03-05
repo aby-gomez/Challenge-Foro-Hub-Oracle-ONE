@@ -1,10 +1,7 @@
 package com.alura.foro_hub.topico;
 
 
-import com.alura.foro_hub.topico.dto.DtoCrearTopico;
-import com.alura.foro_hub.topico.dto.DtoDetalleTopico;
-import com.alura.foro_hub.topico.dto.DtoListaTopicos;
-import com.alura.foro_hub.topico.dto.DtoTopicoCreado;
+import com.alura.foro_hub.topico.dto.*;
 import com.alura.foro_hub.usuario.Usuario;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -58,6 +56,12 @@ public class TopicoController {
             Topico topico = service.detallarTopico(id);
 
             return ResponseEntity.ok(new DtoDetalleTopico(topico));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity actualizarTopico(@PathVariable Long id, @AuthenticationPrincipal Usuario usuarioLogeado, @RequestBody @Valid DtoActualizarTopico datos){
+           Topico topico = service.actualizarTopico(id,usuarioLogeado,datos);
+        return ResponseEntity.ok(new DtoTopicoCreado(topico));
     }
 
 }
