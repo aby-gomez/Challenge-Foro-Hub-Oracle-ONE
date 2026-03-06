@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,7 @@ public class TopicoService {
     @Autowired
     List<ValidadorDeCurso> validadorDeCursos;
 
+    @Transactional
     public Topico crearTopico(DtoCrearTopico datos, Usuario usuarioLogeado){
 
         //no permitir topicos duplicados
@@ -52,10 +54,10 @@ public class TopicoService {
 
     }
 
+    //traer lista de topicos
     public Page<Topico> listarTopicos(Pageable paginacion) {
         return topicoRepository.findAll(paginacion);
     }
-
 
     public Page<Topico> listarTopicosConFiltro(Map<String, String> allParams,Pageable paginacion) {
         Specification<Topico> filtroInicial = Specification.where(null);//actua como filtro invisible
@@ -76,6 +78,7 @@ public class TopicoService {
        return lista;
     }
 
+//ficha detalles topico
     public Topico detallarTopico(Long id) {
         Optional<Topico> topico = topicoRepository.findById(id);
         if(topico.isEmpty()){
@@ -84,6 +87,8 @@ public class TopicoService {
         return topico.get();
     }
 
+//actualizar topico
+    @Transactional
     public Topico actualizarTopico(Long id, Usuario usuarioLogeado, DtoActualizarTopico datos) {
 
         Optional<Topico> topico = topicoRepository.findByIdAndAutorEmail(id,usuarioLogeado.getEmail());
@@ -95,5 +100,22 @@ public class TopicoService {
 
 
         return topicoRepository.save(topicoExiste);
+    }
+
+//borrar topico
+    @Transactional
+    public void borrarTopico(Long id, Usuario usuarioLogeado) {
+        Optional<Topico> topico = topicoRepository.findById(id);
+        if(topico.isEmpty()){
+            throw new EntityNotFoundException("topico no encontrado");
+        }
+        Topico topicoExiste = topico.get();
+        boolean esModerador = usuarioLogeado.getAuthorities().stream().anyMatch(u->u.getAuthority().equals("MODERADOR"));
+        boolean esAutor = usuarioLogeado.getEmail().equals(topicoExiste.getAutor().getEmail());
+
+        if(esModerador || esAutor ){
+            topicoExiste.borrarTopico();
+        }else{
+        throw new ValidationException("no tienes los permisos para borrar este topico");}
     }
 }

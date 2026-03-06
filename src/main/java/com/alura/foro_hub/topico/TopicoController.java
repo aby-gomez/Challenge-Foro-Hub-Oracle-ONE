@@ -59,9 +59,16 @@ public class TopicoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity actualizarTopico(@PathVariable Long id, @AuthenticationPrincipal Usuario usuarioLogeado, @RequestBody @Valid DtoActualizarTopico datos){
+    public ResponseEntity<DtoTopicoCreado> actualizarTopico(@PathVariable Long id, @AuthenticationPrincipal Usuario usuarioLogeado, @RequestBody @Valid DtoActualizarTopico datos){
            Topico topico = service.actualizarTopico(id,usuarioLogeado,datos);
         return ResponseEntity.ok(new DtoTopicoCreado(topico));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity borrarTopico(@PathVariable Long id, @AuthenticationPrincipal Usuario usuarioLogeado){
+        service.borrarTopico(id,usuarioLogeado);
+        return ResponseEntity.noContent().build();//devuelve 204
+
     }
 
 }

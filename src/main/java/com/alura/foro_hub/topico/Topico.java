@@ -45,6 +45,8 @@ public class Topico {
     @OneToMany(mappedBy = "topico")//define el atributo que va a ser usado en la otra clase(Respuesta) para mapear a la variable mappedby, la dueña de la relacion es respuesta
     private List<Respuesta> respuestas= new ArrayList<>();
 
+    private boolean activo;
+
     public Topico(DtoCrearTopico datos, Usuario usuario){
         this.titulo= datos.titulo();
         this.mensaje = datos.mensaje();
@@ -60,6 +62,10 @@ public class Topico {
     public void actualizarTopico(DtoActualizarTopico datos) {
         this.titulo = datos.titulo();
         this.mensaje = datos.mensaje();
+    }
+
+    public void borrarTopico(){
+        this.activo = false;
     }
 }
 
