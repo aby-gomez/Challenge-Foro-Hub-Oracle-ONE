@@ -1,0 +1,137 @@
+/*reset de css*/
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box; /* Fundamental: hace que el padding no agrande el ancho de las cajas */
+    
+
+}
+
+/*selecciona el elemento raiz del documento*/
+:root{
+    --bg-color-w: #EBEFFF;
+    --bg-color-lilac: #AFB3FF;
+    --bg-color-lilac-dark : #656ED3;
+    --font-main: "Inter", sans-serif;
+    --weight-normal: 400;
+    --weight-bold: 700;
+    --font-title: "Jersey 10", sans-serif;
+}
+
+
+
+body{
+    background-color: var(--bg-color-w);
+    max-height: 100vh;
+    max-width: 100vw;
+    font-family: var(--font-main);
+    font-optical-sizing: auto;
+    font-weight: var(--weight-normal);
+    font-style: normal;
+    font-size: 1rem;
+    
+}
+header{
+  
+    color: var(--bg-color-lilac);
+    text-align:center;
+    height: 5rem;
+    max-width: 100vw;
+    background-color: var(--bg-color-lilac-dark);   
+    padding:0.5rem;
+    font-family: var(--font-title);
+    font-size: 2rem;
+
+}
+
+.login-visual{
+    display: flex;
+    flex-direction: row;
+ 
+    align-items: center;
+    height: 100vh;/*los hietos ocupan posicion absoluta y se salen del flujo al darle altura al main logro que se acomode un poco*/
+    
+}
+.form-box{
+    
+    width: 55vw;
+    height: 79vh;
+    margin:4.5rem;
+     display: flex;
+    flex-direction: column;
+   
+
+
+}
+
+.content-form{
+   
+    display: flex;
+    flex-direction: column;
+    margin: 3rem;
+    gap: 2.5rem;
+    border: none;/*legend se asienta sobre la linea del fieldset*/
+    legend{
+        font-weight: var(--weight-bold);
+        margin-bottom: 1.5rem;
+        text-align: center;
+     }
+     button{
+        background-color: var(--bg-color-lilac-dark);
+        border-style: none;
+        border-radius: 1rem;
+         padding: 0.3rem;
+         color: var(--bg-color-lilac);
+     }
+     button:hover,label:hover{
+        cursor: pointer;
+     }
+     a{
+        text-align: center;
+        text-decoration: none;
+        color: black;
+     }
+    
+}
+
+.labels-form{
+    display: flex;
+    flex-direction: column;
+    gap:0.7rem;
+     input{
+        border-radius: 1rem;
+        padding: 0.3rem;
+        border-color:var(--bg-color-lilac-dark);
+        border-width: 1.2px;
+        background-color: #EBEFFF;
+     }
+}
+
+.aside-visual{
+    
+    position: relative;
+    width: 77vw;/*no habia definido las medidas del contenedor por eso se salian los hijos*/
+    height: 100vh;
+    div{
+        overflow: hidden;
+        position:absolute;
+        z-index: -1;/*imagen por detras*/
+        height: 100vh;
+        width: 34vw; /*43% del ancho de la ventana del navegador*/ 
+        background-color: var(--bg-color-lilac);
+        right: 0;
+    }
+}
+
+.login-notebook-img {
+    z-index: 1; /*imagen por delante*/
+    position: absolute;
+   width: 46vw;
+    height: auto;
+    overflow: hidden;
+    top: 2rem;
+    right: 7rem;
+
+   
+
+}
