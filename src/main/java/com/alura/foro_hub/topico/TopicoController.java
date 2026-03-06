@@ -19,7 +19,7 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("/tópicos")
+@RequestMapping("/topicos")
 public class TopicoController {
 
     @Autowired
