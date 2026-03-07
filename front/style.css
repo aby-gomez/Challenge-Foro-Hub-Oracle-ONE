@@ -1,0 +1,91 @@
+/*reset de css*/
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box; /* Fundamental: hace que el padding no agrande el ancho de las cajas */
+    
+
+}
+
+/*selecciona el elemento raiz del documento*/
+:root{
+    --bg-color-w: #EBEFFF;
+    --bg-color-lilac: #AFB3FF;
+    --bg-color-lilac-dark : #656ED3;
+    --bg-color-light-w: #EEF5FF;
+    --bg-color-bone : #E3E3E3;
+    --font-main: "Inter", sans-serif;
+    --weight-normal: 400;
+    --weight-bold: 700;
+    --font-title: "Jersey 10", sans-serif;
+    --text-blue : #3B64FF;
+}
+
+header{
+  
+    color: var(--bg-color-lilac);
+    text-align:center;
+    height: 5rem;
+    max-width: 100vw;
+    background-color: var(--bg-color-lilac-dark);   
+    padding:0.5rem;
+    font-family: var(--font-title);
+    font-size: 2rem;
+
+}
+
+body{
+    background-color: var(--bg-color-w);
+    max-height: 100vh;
+    max-width: 100vw;
+    font-family: var(--font-main);
+    font-optical-sizing: auto;
+    font-weight: var(--weight-normal);
+    font-style: normal;
+    font-size: 1rem;
+    
+}
+
+.main-container{
+    
+   
+    max-width: 68vw;
+    margin: 2.75rem auto;/*eñ espacio sobrantee lo distribuye a los lados, centrando el contenido*/
+}
+
+
+.card-container{/*ancho lo define el padre*/
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));/*autorepite valores, minimo ancho y maximo 1 fraccion de la grilla*/
+    grid-auto-rows: 22rem;
+    row-gap: 2rem;
+    
+   
+}
+
+.card-item{
+    display: flex;
+    flex-direction: column;
+    height: 20rem;/*sino dejo fija una altura la imagen emmpuja mi contenido*/
+    align-items: center;
+    background-color: var(--bg-color-light-w);
+    gap: 1rem;
+    margin: 1rem;
+    border-radius: 15px;
+   
+
+}
+
+.img-container{
+        width: 100%;
+        height: 11rem;/*x2*/
+       padding: 0.5rem;
+    }
+
+.card-item-content{
+  
+}
+.date{
+    
+    color: var(--text-blue)
+}
