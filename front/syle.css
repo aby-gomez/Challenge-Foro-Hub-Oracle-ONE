@@ -1,0 +1,19 @@
+/*reset de css*/
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box; /* Fundamental: hace que el padding no agrande el ancho de las cajas */
+    
+
+}
+
+/*selecciona el elemento raiz del documento*/
+:root{
+    --bg-color-w: #EBEFFF;
+    --bg-color-lilac: #AFB3FF;
+    --bg-color-lilac-dark : #656ED3;
+    --font-main: "Inter", sans-serif;
+    --weight-normal: 400;
+    --weight-bold: 700;
+    --font-title: "Jersey 10", sans-serif;
+}

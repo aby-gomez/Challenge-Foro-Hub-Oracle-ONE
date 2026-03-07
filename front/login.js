@@ -2,22 +2,25 @@
 const baseURL = 'http://localhost:8080/login';
 const form = document.getElementById('form');
 
+const guardarToken = (token) => {
+    localStorage.setItem("tokenJWT", token);
+};
 
 
     form.addEventListener("submit", function(event){
-        event.preventDefault();//evita que la pagina se recargue
+        event.preventDefault();//evita que la pagina se recargue(submit envia y recarga)
         
         //obtengo valores de los campos
         let mail = document.getElementById('user').value;
         let contraseña = document.getElementById('pass').value;
 
-        //convierto a objeto
+        //convierto los valores props de un objeto
         const loginData = {
         email: mail,       
         contraseña: contraseña  
     };
 
-        //convierto a json
+        //convierto el objeto a json
         let loginJson = JSON.stringify(loginData);
 
         fetch(baseURL, {
@@ -25,22 +28,25 @@ const form = document.getElementById('form');
             headers: { 'Content-Type': 'application/json' },//los content type se dividen en tipo/subtipo
             body: loginJson,
         })
-        .then(response => {
-            if (response.ok){
-                console.log(response.text)
-            return response.text();}
-    
-            throw new Error(response.status);
+        .then(response => {//cada then devuelve una Promise que contiene un objeto Response
+            if (response.ok){//si la respuesta esta en el rango de 200
+               
+                return response.text();
+            }
+            if(response.status === 403){ alert('Usuario no registrado')};
+            throw new Error(`Response status: ${response.status} y ${response.body}`);
         })
+
         .then(data => {
-            console.log("Datos: " + data);
+            guardarToken(data);
+            window.location.href = "dashboard.html";//ingreso a lla otra pagina
         })
         .catch(err => {
             console.error("ERROR: ", err.message)
         });
 
      
-        form.reset();
+        form.reset();//restaura valores predeterminados del form
 
     })
 //el fetch al estar afuera del event listener se ejecutaba primero y luego el callback del primero, declare mal el objeto literal
@@ -61,6 +67,7 @@ else {
 }
 
 */
+
 
 
 
