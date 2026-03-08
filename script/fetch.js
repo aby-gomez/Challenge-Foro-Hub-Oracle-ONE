@@ -8,19 +8,23 @@ const sesionExpirada = () => {
         window.location.href= "login.html"
 }
 
+const formatearFecha= (fecha) =>{
+    return new Date(fecha).toLocaleDateString("es-AR")
+}
+
  const crearLista = (data) => {
         let contenedor = document.getElementById("container");
-       
+        
     
         /*backticks en la misma linea que el return para que js no agregue el punto y coma antes y salga de la funcion*/ 
         contenedor.insertAdjacentHTML("afterbegin",
-        data.content.map(i => {
+        data.content.map((i,n) => {
              return ` <div class="card-item"> 
                     <div>
-                        <img src="/front/img/topico-item.svg" alt="topico-img" class="img-container">
+                        <img src="/front/img/topico-item-${n+1}.svg" alt="topico-img" class="img-container">
                     </div>
                     <div class="card-item-content" >
-                        <div class="date">12/00/2000</div>
+                        <div class="date">${formatearFecha(i.fechaCreacion)}</div>
                         <div class="title">${i.titulo} </div>
                         <div class="text">${i.mensaje}</div>
                     </div>
