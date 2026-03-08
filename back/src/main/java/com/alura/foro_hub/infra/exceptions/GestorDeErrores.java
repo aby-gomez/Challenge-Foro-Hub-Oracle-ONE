@@ -1,5 +1,6 @@
 package com.alura.foro_hub.infra.exceptions;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,4 +59,8 @@ public class GestorDeErrores {
         return ResponseEntity.badRequest().body(String.format("El parámetro '%s' debe ser de tipo numero", e.getName()));
     }
 
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity tokenExpirado(TokenExpiredException e){
+         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
 }

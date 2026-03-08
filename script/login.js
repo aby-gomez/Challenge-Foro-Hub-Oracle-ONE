@@ -1,6 +1,7 @@
 
 const baseURL = 'http://localhost:8080/login';
 const form = document.getElementById('form');
+const topicos = "/dashboard.html"
 
 const guardarToken = (token) => {
     localStorage.setItem("tokenJWT", token);
@@ -31,15 +32,15 @@ const guardarToken = (token) => {
         .then(response => {//cada then devuelve una Promise que contiene un objeto Response
             if (response.ok){//si la respuesta esta en el rango de 200
                
-                return response.text();
+                return response.json();
             }
             if(response.status === 403){ alert('Usuario no registrado')};
             throw new Error(`Response status: ${response.status} y ${response.body}`);
         })
 
         .then(data => {
-            guardarToken(data);
-            window.location.href = "dashboard.html";//ingreso a lla otra pagina
+            guardarToken(data.tokenJWT);
+             window.location.href = "dashboard.html";//ingreso a lla otra pagina
         })
         .catch(err => {
             console.error("ERROR: ", err.message)

@@ -75,6 +75,11 @@ body{
    
 
 }
+.card-item:hover{
+    cursor: pointer;
+   background-color: white;
+   transition:  0.6s ease;
+}
 
 .img-container{
         width: 100%;
