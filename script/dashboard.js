@@ -2,41 +2,42 @@
 
     const containerTopicos = document.getElementById("container");
     const modal = document.getElementById("modalDetalle");
+    const mainContainer = document.getElementById("main-container");
+
     let listaTopicos = [];
     
     //async y await se hace con try catch
     const inicializarLista = async () =>{//async hace que la funcion devuelva una promesa 
-    try {
-        const respuesta = await getDatos("GET", "/topicos");//pausa la ejecucion y espera una promesa resuelta
-        crearLista(respuesta); // Solo se ejecuta si la línea anterior tuvo éxito
-        listaTopicos = respuesta.content;
-    } catch (error) {
-        console.error("Error al cargar tópicos:", error);
-        //  podría mostrar un mensaje de error en el DOM para el usuario
+        try {
+            const respuesta = await getDatos("GET", "/topicos");//pausa la ejecucion y espera una promesa resuelta
+            crearLista(respuesta); // Solo se ejecuta si la línea anterior tuvo éxito
+            listaTopicos = respuesta.content;
+        } catch (error) {
+            console.error("Error al cargar tópicos:", error);
+            //  podría mostrar un mensaje de error en el DOM para el usuario
+        }
     }
-}
 
-const detallarTopico = async (id) =>{//async hace que la funcion devuelva una promesa 
-    try {
-        const respuesta = await getDatosPorId("GET", "/topicos",`/${id}`);//pausa la ejecucion y espera una promesa resuelta
-        return respuesta;
-        
+    const detallarTopico = async (id) =>{//async hace que la funcion devuelva una promesa 
+        try {
+            const respuesta = await getDatosPorId("GET", "/topicos",`/${id}`);//pausa la ejecucion y espera una promesa resuelta
+            return respuesta;
+            
 
-    } catch (error) {
-        console.error("Error al cargar tópico:", error);
-        //  podría mostrar un mensaje de error en el DOM para el usuario
+        } catch (error) {
+            console.error("Error al cargar tópico:", error);
+            //  podría mostrar un mensaje de error en el DOM para el usuario
+        }
     }
-}
         
     const formatearFecha= (fecha) =>{
     return new Date(fecha).toLocaleDateString("es-AR")
     }
 
     const crearLista = (data) => { //data-id es un custom data attirbute info solo visible para el programador?
-        let contenedor = document.getElementById("container");
-        
-     /*backticks en la misma linea que el return para que js no agregue el punto y coma antes y salga de la funcion*/ 
-        contenedor.insertAdjacentHTML("afterbegin",
+    
+        /*backticks en la misma linea que el return para que js no agregue el punto y coma antes y salga de la funcion*/ 
+        containerTopicos.insertAdjacentHTML("afterbegin",
         data.content.map((i,n) => {
              return ` <div class="card-item" data-id="${i.id}"> 
                        
@@ -57,8 +58,7 @@ const detallarTopico = async (id) =>{//async hace que la funcion devuelva una pr
 }
 
 
-
- const detalleTopico = (data,id) =>{
+const detalleTopico = (data,id) =>{
 
          const posicion = listaTopicos.findIndex(item => item.id == id);
         
@@ -80,6 +80,28 @@ const detallarTopico = async (id) =>{//async hace que la funcion devuelva una pr
                 </div>`
  }
 
+ const crearTopico= () =>{
+    return `
+     <form  method="" class="create-topico" id="create-topico">
+            <fieldset class="content-form">
+                
+                <legend>Crea tu tópico</legend>
+                    <div class="labels-form">
+                    <label for="title" >Título</label>
+                    <input type="text" id="text" name="text" placeholder="Título" required>
+            
+                    <label for="msg" >Mensaje</label>
+                    <input type="text" id="msg" name="msj" placeholder="Tu comentario" required>
+                    </div>
+
+                    <button type="submit"  >Crear</button>
+                  
+                
+            </fieldset>
+        </form>
+    `
+
+ }
 
  //inicio de ejecucion del script
 
@@ -109,3 +131,17 @@ modal.addEventListener("click", (event) =>{//nombre del pRmetro OBJETO DEL EVENT
     
 })
     
+
+//crear topico
+window.addEventListener("hashchange", () =>{
+    const destino = window.location.hash;
+
+    if (destino === "#crear-topico"){
+        mainContainer.innerHTML="";
+        mainContainer.insertAdjacentHTML("afterbegin", crearTopico());
+    }
+    if(destino=== "#inicio"){
+        window.location.href= "dashboard.html";
+    }
+
+})
