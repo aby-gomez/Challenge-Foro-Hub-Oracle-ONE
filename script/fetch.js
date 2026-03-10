@@ -9,7 +9,7 @@ const sesionExpirada = () => {
 }
 
 
-export default function getDatos (metodo,endpoint){
+export  function getDatos (metodo,endpoint){
     
     return fetch( `${baseURL}${endpoint}`, {
         method: `${metodo}`,
@@ -30,3 +30,22 @@ export default function getDatos (metodo,endpoint){
 }
 
    
+export  function getDatosPorId (metodo,endpoint,id){
+    
+    return fetch( `${baseURL}${endpoint}${id}`, {
+        method: `${metodo}`,
+        headers: { 'Accept': 'application/json',//enviame un json
+            'Authorization': `Bearer ${token}`
+         }
+    })
+    .then(response => {
+        if(response.ok){
+            return response.json();
+        }if(response.status === 403){
+            sesionExpirada();
+        }else{
+        throw new Error(`Error ${response.status}`);
+        }
+    })
+   
+}

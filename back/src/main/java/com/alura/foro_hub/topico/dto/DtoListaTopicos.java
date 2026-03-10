@@ -6,6 +6,7 @@ import com.alura.foro_hub.topico.Topico;
 import java.time.Instant;
 
 public record DtoListaTopicos(
+        Long id,
         String titulo,
         String mensaje,
         Instant fechaCreacion,
@@ -14,7 +15,9 @@ public record DtoListaTopicos(
         String nombreCurso
 ) {
     public DtoListaTopicos(Topico topico){
-        this( topico.getTitulo(),
+        this(
+                topico.getId(),
+                topico.getTitulo(),
                 topico.getMensaje(),
                 topico.getFechaCreacion(),
                 topico.getStatus(),
