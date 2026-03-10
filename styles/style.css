@@ -165,7 +165,7 @@ a:hover{
     
     
 }
-.text{
+.text:not(.card-item-detail){
     /*el text ellipsis no va a funcionar si su contenedor no tiene un ancho maximo*/
     max-width: 20rem;
      white-space: nowrap;
@@ -174,3 +174,10 @@ a:hover{
     font-size: 0.7rem;
     
 }
+
+.card-item-detail{
+     transition: 0.5s; 
+     z-index: 1;
+}
+
+

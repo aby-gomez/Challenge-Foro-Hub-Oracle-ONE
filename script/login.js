@@ -19,7 +19,7 @@ const guardarToken = (token) => {
         const loginData = {
         email: mail,       
         contraseña: contraseña  
-    };
+        };
 
         //convierto el objeto a json
         let loginJson = JSON.stringify(loginData);
