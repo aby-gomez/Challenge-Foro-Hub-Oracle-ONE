@@ -1,6 +1,7 @@
     import getDatos from "./fetch.js";
 
     const containerTopicos = document.getElementById("container");
+    const modal = document.getElementById("modalDetalle");
     let datos = [];
     
     //async y await se hace con try catch
@@ -59,7 +60,21 @@
 
 
 containerTopicos.addEventListener("click", () =>{//event bublbing, haciendo click en el hijo el evento sube al padre, este contenedor
-    document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-    detalleTopico(datos);
+    
+
+    
+    document.getElementById("contenidoModal").innerHTML = detalleTopico(datos);
+
+    // 3. Muestras el modal
+    modal.classList.add("active");
+    
+})
+
+modal.addEventListener("click", (event) =>{//nombre del pRmetro OBJETO DEL EVENTO
+    const card = event.target.closest(".contenidoModal");
+    if (card) return;
+    document.getElementById("contenidoModal").innerHTML ="";
+    modal.classList.remove("active");
+    
 })
     
