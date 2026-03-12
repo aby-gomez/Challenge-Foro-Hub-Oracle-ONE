@@ -1,7 +1,7 @@
     import {getDatos, getDatosPorId} from "./fetch.js"; //al estar marcadas solo con export las importo entre llaves, export default solo permite exportar 1 funcion
 
-    const containerTopicos = document.getElementById("container");
-    const modal = document.getElementById("modalDetalle");
+    let containerTopicos = document.getElementById("container");/*let porque este elemento es dinamico, al estar recargando va a cambiar varias veces hacia donde hace referencia  */ 
+
     const mainContainer = document.getElementById("main-container");
     const leftNav = document.getElementById("left-nav");
     let listaTopicos = [];
@@ -41,10 +41,10 @@
    
 
     const crearLista = (data) => { //data-id es un custom data attirbute info solo visible para el programador?
+        console.log(data)
     
         /*backticks en la misma linea que el return para que js no agregue el punto y coma antes y salga de la funcion*/ 
-        containerTopicos.insertAdjacentHTML("afterbegin",
-        data.content.map((i,n) => {
+        containerTopicos.insertAdjacentHTML("afterbegin", data.content.map((i,n) => {
              return ` <div class="card-item" data-id="${i.id}"> 
                        
                     <div>
@@ -60,7 +60,7 @@
                 </div>`
         }
     ).join("") //el array que devuelve esta formado x comas, eso grid lo toma como otra columna y daria problemas
-)
+        )
 }
 
 
@@ -119,7 +119,7 @@ const detalleTopico = (data,id) =>{
  inicializarLista();
 
  //muestra detalle del topico, igual debo poner async y await por llamar al fetch de detalle topico
-containerTopicos.addEventListener("click", async (event) =>{//event bublbing, haciendo click en el hijo el evento sube al padre, este contenedor
+mainContainer.addEventListener("click", async (event) =>{//event bublbing, haciendo click en el hijo el evento sube al padre, este contenedor
 
     // Buscamos el elemento que tenga el atributo data-id partiendo desde donde se hizo clic
     const elementoConId = event.target.closest("[data-id]");
@@ -128,16 +128,23 @@ containerTopicos.addEventListener("click", async (event) =>{//event bublbing, ha
 
     document.getElementById("contenidoModal").innerHTML = detalleTopico(topico,id);
     //  Muestra el modal
-    modal.classList.add("active");
+    document.getElementById("modalDetalle").classList.add("active");
     
 })
 
 //sale del detalle de topico
-modal.addEventListener("click", (event) =>{//nombre del pRmetro OBJETO DEL EVENTO
+mainContainer.addEventListener("click", (event) =>{//nombre del parametro OBJETO DEL EVENTO
+    const modal = document.getElementById("modalDetalle");
+    if(!modal) return;
+
     const card = event.target.closest(".contenidoModal");
     if (card) return;
-    document.getElementById("contenidoModal").innerHTML ="";
-    modal.classList.remove("active");
+
+     // Solo cerramos si el modal está activo
+    if (modal.classList.contains("active")) {
+        document.getElementById("contenidoModal").innerHTML = "";
+        modal.classList.remove("active");
+    }
     
 })
     
@@ -171,7 +178,22 @@ leftNav.addEventListener("click", (event) =>{
             
             const inicio = document.getElementById("inicio");
             inicio.classList.add("active");
-            inicializarLista();
+            
+            mainContainer.innerHTML = `
+            <div class="card-container" id="container"></div>
+            <div id="modalDetalle">
+            <div id="contenidoModal" class="contenidoModal">
+            </div>
+             </div>
+            `;
+
+            //reasigno el valor de el contenedor
+            containerTopicos = document.getElementById("container");
+           
+
+             // 2. Ahora que el #container existe en el DOM, le pedimos a crearLista que lo llene
+            // Nota: Tu función crearLista ya debería tener el document.getElementById("container") adentro
+            crearLista({content: listaTopicos});
         }
 
     if(event.target.closest("#crear-topico")){
