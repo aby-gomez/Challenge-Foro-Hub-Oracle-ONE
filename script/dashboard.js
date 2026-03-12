@@ -3,8 +3,16 @@
     const containerTopicos = document.getElementById("container");
     const modal = document.getElementById("modalDetalle");
     const mainContainer = document.getElementById("main-container");
-
+    const leftNav = document.getElementById("left-nav");
     let listaTopicos = [];
+
+    const formatearFecha= (fecha) =>{
+    return new Date(fecha).toLocaleDateString("es-AR")
+    }
+
+    const limpiarMain = () =>{
+        mainContainer.innerHTML= "";
+    }
     
     //async y await se hace con try catch
     const inicializarLista = async () =>{//async hace que la funcion devuelva una promesa 
@@ -30,9 +38,7 @@
         }
     }
         
-    const formatearFecha= (fecha) =>{
-    return new Date(fecha).toLocaleDateString("es-AR")
-    }
+   
 
     const crearLista = (data) => { //data-id es un custom data attirbute info solo visible para el programador?
     
@@ -82,22 +88,26 @@ const detalleTopico = (data,id) =>{
 
  const crearTopico= () =>{
     return `
-     <form  method="" class="create-topico" id="create-topico">
-            <fieldset class="content-form">
-                
-                <legend>Crea tu tópico</legend>
-                    <div class="labels-form">
-                    <label for="title" >Título</label>
+     <form  method="" class="form-create-topico" id="create-topico">
+            <fieldset class = "create-topico-content">
+
+                <legend></legend>
+                   
+                   <div class= "create-topico-input">
+                   
+                    <label for="text">Título</label>
                     <input type="text" id="text" name="text" placeholder="Título" required>
-            
+                
                     <label for="msg" >Mensaje</label>
                     <input type="text" id="msg" name="msj" placeholder="Tu comentario" required>
-                    </div>
-
+                       <div class="button-create">
                     <button type="submit"  >Crear</button>
-                  
+                    </div>
+                    </div>
+                    
                 
             </fieldset>
+          
         </form>
     `
 
@@ -133,15 +143,40 @@ modal.addEventListener("click", (event) =>{//nombre del pRmetro OBJETO DEL EVENT
     
 
 //crear topico
-window.addEventListener("hashchange", () =>{
-    const destino = window.location.hash;
+// window.addEventListener("hashchange", () =>{
+//     const destino = window.location.hash;
 
-    if (destino === "#crear-topico"){
-        mainContainer.innerHTML="";
-        mainContainer.insertAdjacentHTML("afterbegin", crearTopico());
-    }
-    if(destino=== "#inicio"){
-        window.location.href= "dashboard.html";
-    }
+//     if (destino === "#crear-topico"){
+//         mainContainer.innerHTML="";
+//         mainContainer.insertAdjacentHTML("afterbegin", crearTopico());
+//         const crear = document.getElementById("crear-topico");
 
+//     }
+//     if(destino=== "#inicio"){
+//         window.location.href= "dashboard.html";
+//     }
+
+// })
+
+
+//crear topico
+leftNav.addEventListener("click", (event) =>{
+     const link = event.target.closest('li'); // Buscamos el link más cercano
+    if (!link) return;
+
+    limpiarMain();
+    document.querySelectorAll('.nav-dash ul li ').forEach(a => a.classList.remove('active'));
+
+   if(event.target.closest("#inicio")){
+            
+            const inicio = document.getElementById("inicio");
+            inicio.classList.add("active");
+            inicializarLista();
+        }
+
+    if(event.target.closest("#crear-topico")){
+            mainContainer.insertAdjacentHTML("afterbegin", crearTopico());
+            const crear = document.getElementById("crear-topico");
+            crear.classList.add("active");
+        }
 })

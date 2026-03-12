@@ -22,6 +22,7 @@
     --font-dashboard: "Poppins", sans-serif;
     --text-blue : #3B64FF;
     --bg-color-light-blue: #c8d4ff;
+    --bg-color-light: #DFEAF2;
 }
 
 header{
@@ -51,14 +52,17 @@ ul{
     list-style: none;
     
 }
-a{
-    text-decoration: none;
+li{
+    
     color: var(--bg-color-lilac-dark);
     border-radius: 8px;
 }
-a:hover{
-    
+
+li:hover{
+
+    cursor: pointer;
 }
+
 
 .body-dash{
     font-family: var(--font-dashboard);
@@ -103,7 +107,8 @@ a:hover{
 .main-container{
     grid-area: main;
    
-    /*margin: 2.75rem auto; el espacio sobrantee lo distribuye a los lados, centrando el contenido*/
+    margin: 3rem ;/* el espacio sobrantee lo distribuye a los lados, centrando el contenido*/
+    
 }
 
 
@@ -227,6 +232,72 @@ padding-bottom: 1rem;    /* Espacio antes de las respuestas */
     font-size: 0.7rem;
 }
     
+
+/*crear topico*/
+.form-create-topico{
+    width: 100%;
+    max-width: 77vw;
+    height: 51vh;
+    display: flex;
+    flex-direction: column;
+    
+    
+  
+}
+
+.create-topico-content{
+    flex: 1;/*Hace que el fieldset se estire para ocupar todo el alto disponible del form */
+    background-color: white;
+    border: white;
+    border-radius: 10px;
+    border-left: 6px solid var(--bg-color-light-blue);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+     padding: 4rem 1.8rem;
+    
+
+    
+    
+}
+
+.create-topico-input{
+    display: flex;
+    flex-direction: column;
+    flex:1;/*loma el ancho total del contenedor y lo divide equitativamente con los hijos*/
+    gap: 0.68rem;
+  
+    input{
+        
+        border: 1px solid;/*quita el sombreado gris*/
+        width: 100%;      /* Ocupa todo el ancho que te dé el main */
+        max-width: 31rem; /* ..pero nunca pases de 496px. */
+        height: 3.12rem;
+        border-color: var(--bg-color-light);
+        border-radius: 14px;
+        border-width: 1px;
+        outline: none;/*al hacer click no quede un borde negro*/
+        appearance: none; /*apariencia que de el naevagor por defecto*/
+       padding: 0 1rem;
+    }
+    input:focus {
+    /* En lugar del outline feo, cambiamos el color del borde 
+       o le damos un fondo sutil */
+    border-color: var(--bg-color-light-blue);
+    background-color: #fdfdfd;
+    
+    /* Opcional: una sombra muy suave para que resalte */
+    box-shadow: 0 0 5px rgba(123, 97, 255, 0.2);
+}
+}
+
+.nav-dash li.active{
+    border-left: 6px solid var(--bg-color-light-blue);
+    color: var(--bg-color-lilac-dark);
+    font-weight: var(--weight-bold);
+}
+
+
 
 
 
