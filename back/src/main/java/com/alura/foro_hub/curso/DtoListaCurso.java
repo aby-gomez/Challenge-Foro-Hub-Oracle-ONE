@@ -1,15 +1,11 @@
 package com.alura.foro_hub.curso;
 
-import jakarta.validation.constraints.NotNull;
-
 public record DtoListaCurso(
-        String nombreCurso,
-        Categoria categoria
+        String cursoNombre
 ) {
-    public DtoListaCurso(Curso curso) {
+    public DtoListaCurso(Curso curso){
         this(
-                curso.getNombre(),
-                curso.getCategoria()
+                curso.getNombre()
         );
     }
 }
