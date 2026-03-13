@@ -110,47 +110,39 @@ const detalleTopico = (data,id) =>{
 
  const crearTopico= (categorias) =>{
     return `
-     <form  method="" class="form-create-topico" id="create-topico">
-            <fieldset class = "create-topico-content">
-
-                <legend></legend>
-                   
-                <div class= "create-topico-input">
-                   
-                    <label for="text">Título</label>
-                    <input type="text" id="text" name="text" placeholder="Título" required>
-                
-                    <label for="msg" >Mensaje</label>
-                    <input type="text" id="msg" name="msj" placeholder="Tu comentario" required>
+            <form method="" class="form-create-topico" id="create-topico">
+                <fieldset class="create-topico-content">
+                    <legend></legend>
                     
-                   
-                    <div id ="categorie-select">
-                         <label for="categoria">Seleccioná la categoría : </label>
-                         <select id="categoria" name="categoria">
-                         ${categorias.map( (r) =>{
-                            return `
-                            <option value="${r.categoria}">${r.categoria}</option>
-                            
-                            `
-                         }).join("")}
-                               
-                         </select>
+                    <div class="create-topico-input">
+                        
+                        <div class="form-left">
+                            <label for="text">Título</label>
+                            <input type="text" id="text" name="text" placeholder="Título" required>
+                            <label for="msg">Mensaje</label>
+                            <textarea id="msg" name="msj" placeholder="Tu comentario" required></textarea>
+                        </div>
+
+                        <div class="form-right">
+                            <div id="categorie-select">
+                                <label for="categoria">Seleccioná la categoría:</label>
+                                <select id="categoria" name="categoria">
+                                    ${categorias.map((r) => `
+                                        <option value="${r.categoria}">${r.categoria}</option>
+                                    `).join("")}
+                                </select>
+                            </div>
+                            <div id="curso-select"></div>
+                        </div>
+
                     </div>
 
-                    <div id="curso-select">
-                    
+                    <div class="button-create">
+                        <button type="submit">Crear</button>
                     </div>
                     
-                     <div class="button-create">
-                        <button type="submit"  >Crear</button>
-                    </div>
-
-                </div>
-                    
-                
-            </fieldset>
-          
-        </form>
+                </fieldset>
+            </form>
     `
 
  }
