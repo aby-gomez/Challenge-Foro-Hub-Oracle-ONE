@@ -252,7 +252,7 @@ padding-bottom: 1rem;    /* Espacio antes de las respuestas */
     border-radius: 10px;
     border-left: 6px solid var(--bg-color-light-blue);
     display: flex;
-    flex-direction: column;
+    
     justify-content: center;
      padding: 4rem 1.8rem;
     

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -27,7 +28,7 @@ public class CursoController {
 
     //ya conozco las categorias al ser un enum no necesito consultar en la bd. pero si quiero que se pueda editar tiene que pasar  ser tabla
     @GetMapping("/categorias")
-    public ResponseEntity<List<Categoria>> traerCategorias(){
-        return ResponseEntity.ok(List.of(Categoria.values()));
+    public ResponseEntity<List<DtoCategoria>> traerCategorias(){
+        return ResponseEntity.ok(Arrays.stream(Categoria.values()).map(DtoCategoria::new).toList());
     }
 }

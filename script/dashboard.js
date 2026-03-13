@@ -27,6 +27,8 @@
     }
 
     const detallarTopico = async (id) =>{//async hace que la funcion devuelva una promesa 
+
+
         try {
             const respuesta = await getDatosPorId("GET", "/topicos",`/${id}`);//pausa la ejecucion y espera una promesa resuelta
             return respuesta;
@@ -39,6 +41,14 @@
     }
         
    
+    const traerCategorias = async () => {
+        try { return await getDatos("GET", "/cursos/categorias");
+        }catch (error) {
+            console.error("Error al cargar categorìas:", error);
+            //  podría mostrar un mensaje de error en el DOM para el usuario
+        }
+
+    }
 
     const crearLista = (data) => { //data-id es un custom data attirbute info solo visible para el programador?
         console.log(data)
@@ -86,7 +96,7 @@ const detalleTopico = (data,id) =>{
                 </div>`
  }
 
- const crearTopico= () =>{
+ const crearTopico= (categorias) =>{
     return `
      <form  method="" class="form-create-topico" id="create-topico">
             <fieldset class = "create-topico-content">
@@ -100,8 +110,22 @@ const detalleTopico = (data,id) =>{
                 
                     <label for="msg" >Mensaje</label>
                     <input type="text" id="msg" name="msj" placeholder="Tu comentario" required>
-                       <div class="button-create">
-                    <button type="submit"  >Crear</button>
+                    
+                    <div class="button-create">
+                        <button type="submit"  >Crear</button>
+                    </div>
+
+                    <div>
+                         <label for="categoria">Seleccioná la categoría : </label>
+                         <select id="categoria" name="categoria">
+                         ${categorias.map( (r) =>{
+                            return `
+                            <option value="${r.categoria}">${r.categoria}</option>
+                            `
+                         }).join("")
+                    }
+                               
+                         </select>
                     </div>
                     </div>
                     
@@ -123,6 +147,7 @@ mainContainer.addEventListener("click", async (event) =>{//event bublbing, hacie
 
     // Buscamos el elemento que tenga el atributo data-id partiendo desde donde se hizo clic
     const elementoConId = event.target.closest("[data-id]");
+    if(!elementoConId) return;
     const id = elementoConId.dataset.id;
     const topico = await detallarTopico(id);
 
@@ -166,8 +191,8 @@ mainContainer.addEventListener("click", (event) =>{//nombre del parametro OBJETO
 // })
 
 
-//crear topico
-leftNav.addEventListener("click", (event) =>{
+//crear topico, no olvidar que el contexto debe ser async para esperar una promesa
+leftNav.addEventListener("click", async (event) =>{
      const link = event.target.closest('li'); // Buscamos el link más cercano
     if (!link) return;
 
@@ -197,8 +222,11 @@ leftNav.addEventListener("click", (event) =>{
         }
 
     if(event.target.closest("#crear-topico")){
-            mainContainer.insertAdjacentHTML("afterbegin", crearTopico());
+             const respuesta = await traerCategorias();
+               
+            mainContainer.insertAdjacentHTML("afterbegin", crearTopico(respuesta));
             const crear = document.getElementById("crear-topico");
             crear.classList.add("active");
         }
 })
+
