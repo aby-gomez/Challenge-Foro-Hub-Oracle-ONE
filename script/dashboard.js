@@ -42,13 +42,25 @@
         
    
     const traerCategorias = async () => {
-        try { return await getDatos("GET", "/cursos/categorias");
+        try { return await getDatos("GET","/cursos/categorias");
         }catch (error) {
             console.error("Error al cargar categorìas:", error);
             //  podría mostrar un mensaje de error en el DOM para el usuario
         }
 
     }
+
+    const traerCursosPorCategoria = async (categoria) =>{
+    try{        
+    return await getDatos("GET", `/cursos/${categoria}`);
+
+    }catch (error) {
+            console.error("Error al cargar cursos:", error);
+            //  podría mostrar un mensaje de error en el DOM para el usuario
+        }
+ }
+
+    
 
     const crearLista = (data) => { //data-id es un custom data attirbute info solo visible para el programador?
         console.log(data)
@@ -111,22 +123,27 @@ const detalleTopico = (data,id) =>{
                     <label for="msg" >Mensaje</label>
                     <input type="text" id="msg" name="msj" placeholder="Tu comentario" required>
                     
-                    <div class="button-create">
-                        <button type="submit"  >Crear</button>
-                    </div>
-
-                    <div>
+                   
+                    <div id ="categorie-select">
                          <label for="categoria">Seleccioná la categoría : </label>
                          <select id="categoria" name="categoria">
                          ${categorias.map( (r) =>{
                             return `
                             <option value="${r.categoria}">${r.categoria}</option>
+                            </div>
                             `
                          }).join("")
                     }
                                
                          </select>
                     </div>
+
+                        <div id="curso-select">
+                        </div>
+                     <div class="button-create">
+                        <button type="submit"  >Crear</button>
+                    </div>
+
                     </div>
                     
                 
@@ -136,6 +153,34 @@ const detalleTopico = (data,id) =>{
     `
 
  }
+
+const cursosDisponibles = (cursos) => {
+    const cursoCreado = document.getElementById("curso-select");
+  
+        cursoCreado.innerHTML="";
+    
+    if (cursos.length === 0) {
+        cursoCreado.insertAdjacentHTML(
+            "afterbegin",
+            `<p>No hay cursos disponibles en esa categoria</p>`
+        );
+        return;
+    } else {
+        const html = `
+            <div id="curso-select"=>
+                <label for="curso">Seleccioná el curso: </label>
+                <select id="curso" name="curso">
+                    ${cursos.map((c) => `
+                        <option value="${c.cursoNombre}" data-curso="${c.cursoNombre}">
+                            ${c.cursoNombre}
+                        </option>
+                    `).join("")}
+                </select>
+            </div>
+        `;
+        cursoCreado.insertAdjacentHTML("afterbegin", html);
+    }
+};
 
  //inicio de ejecucion del script
 
@@ -229,4 +274,20 @@ leftNav.addEventListener("click", async (event) =>{
             crear.classList.add("active");
         }
 })
+
+
+mainContainer.addEventListener("change", async (event) => {
+    console.log("se disparo el evento")
+    
+    const categoriaConId = event.target.closest("#categoria");
+     if(!categoriaConId) return;
+
+     const categoriaSeleccionada = event.target.value;
+    console.log(categoriaSeleccionada);
+    const cursos = await traerCursosPorCategoria(categoriaSeleccionada);
+    cursosDisponibles(cursos);
+
+
+
+} )
 

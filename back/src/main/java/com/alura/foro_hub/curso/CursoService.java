@@ -18,11 +18,7 @@ public class CursoService {
     }
 
     public List<Curso> traerCursoPorCategoria( Categoria categoria) {
-        List<Curso> cursos = cursoRepository.findByCategoria(categoria);
-        if(cursos.isEmpty()){
-            throw new EntityNotFoundException("no hay cursos en la categoria seleccionada");
-        }
-        return cursos;
+        return cursoRepository.findByCategoria(categoria);
 
     }
 }
