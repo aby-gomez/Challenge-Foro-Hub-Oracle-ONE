@@ -115,7 +115,7 @@ const detalleTopico = (data,id) =>{
 
                 <legend></legend>
                    
-                   <div class= "create-topico-input">
+                <div class= "create-topico-input">
                    
                     <label for="text">Título</label>
                     <input type="text" id="text" name="text" placeholder="Título" required>
@@ -130,21 +130,22 @@ const detalleTopico = (data,id) =>{
                          ${categorias.map( (r) =>{
                             return `
                             <option value="${r.categoria}">${r.categoria}</option>
-                            </div>
+                            
                             `
-                         }).join("")
-                    }
+                         }).join("")}
                                
                          </select>
                     </div>
 
-                        <div id="curso-select">
-                        </div>
+                    <div id="curso-select">
+                    
+                    </div>
+                    
                      <div class="button-create">
                         <button type="submit"  >Crear</button>
                     </div>
 
-                    </div>
+                </div>
                     
                 
             </fieldset>
