@@ -89,7 +89,7 @@ li:hover{
     text-align: start;
     padding-left: 2rem;
     display: flex;
-    gap: 2rem;
+    gap: 4rem;
     align-items: center;
 }
 
@@ -114,6 +114,40 @@ li:hover{
     
 }
 
+.search {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.search input{
+   
+    border: 2px solid var(--bg-color-lilac);
+    width: auto;
+    max-width: 27rem;
+    height: 2.12rem;
+    border-radius: 20px;
+    outline: none;
+    appearance: none;
+    padding: 0 2.5rem 0 1.2rem;
+    background-color: var(--bg-color-light-w);
+    color: var(--bg-color-lilac-dark);
+    font-family: var(--font-dashboard);
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+
+}
+.search button{
+    position: absolute;
+    z-index: 1;
+    right: 0.5rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+.search img{
+    height: 0.9rem;
+}
 
 .card-container{/*ancho lo define el padre*/
     display: grid;
@@ -318,7 +352,7 @@ padding-bottom: 1rem;    /* Espacio antes de las respuestas */
     border-right: 6px solid var(--bg-color-lilac);
     color: var(--bg-color-dark);
     font-weight: var(--weight-bold);
-    background-color: var(--bg-color-light-w);
+    background-color: var(--bg-color-w);
 }
 
 .form-right{
