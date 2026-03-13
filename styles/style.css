@@ -294,7 +294,7 @@ padding-bottom: 1rem;    /* Espacio antes de las respuestas */
     }
 }
 #msg{
-    height: 6rem;
+    height: 8rem;
      border: 1px solid;/*quita el sombreado gris*/
               /* Ocupa todo el ancho que te dé el main */
         max-width: 31rem; /* ..pero nunca pases de 496px. */
@@ -370,6 +370,7 @@ padding-bottom: 1rem;    /* Espacio antes de las respuestas */
 
 
 .button-create button {
+    margin-top: 2rem ;
     background-color: var(--bg-color-lilac-dark);
     color: white;
     border: none;
