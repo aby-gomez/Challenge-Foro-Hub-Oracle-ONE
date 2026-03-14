@@ -87,11 +87,20 @@ li:hover{
 .header-dash{
     grid-area: header; 
     text-align: start;
-    padding-left: 2rem;
+    
     display: flex;
-    gap: 4rem;
     align-items: center;
+  
+    justify-content: space-between;
+    padding: 2rem;
+    height: 3.75rem;
+     background: var(--bg-color-light-w);
+    border-bottom: 1px solid #e0dcf8;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
+
 
 .aside-dash{
     grid-area: aside; 
@@ -112,6 +121,104 @@ li:hover{
    
     margin: 3rem ;/* el espacio sobrantee lo distribuye a los lados, centrando el contenido*/
     
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+}
+
+.logo-icon {
+    width: 1.8rem;
+    height: 1.8rem;
+    background: var(--bg-color-lilac-dark);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-name {
+    font-size: 1.07rem;
+    font-weight: 600;
+    color: var(--bg-color-lilac-dark);
+    letter-spacing: 0.02em;
+}
+
+.logo-name span {
+    color: var(--bg-color-lilac);
+    font-weight: 400;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.notif-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 50%;
+    position: relative;
+    color: #9895c5;
+    transition: background 0.2s;
+}
+
+.notif-btn:hover { background: #eeecfb; }
+
+.notif-dot {
+    width: 7px;
+    height: 7px;
+    background: var(--bg-color-lilac-dark);
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border: 1.5px solid var(--bg-color-light-w);
+}
+
+.avatar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 4px 10px 4px 4px;
+    border-radius: 999px;
+    border: 1px solid #e0dcf8;
+    background: white;
+    transition: background 0.2s;
+}
+
+.avatar-wrap:hover { background: #eeecfb; }
+
+.avatar-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-color-lilac);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--bg-color-lilac-dark);
+}
+
+.avatar-name {
+    font-size: 0.82rem;
+    color: var(--bg-color-lilac-dark);
+    font-weight: 500;
 }
 
 .search {
