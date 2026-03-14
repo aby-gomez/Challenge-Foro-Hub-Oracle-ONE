@@ -91,28 +91,54 @@
         )
 }
 
+const detalleTopico = (data, id) => {
+    const posicion = listaTopicos.findIndex(item => item.id == id);
 
-const detalleTopico = (data,id) =>{
+    return `
+        <div class="card-item" id="card-item-detail">
 
-         const posicion = listaTopicos.findIndex(item => item.id == id);
-        
+            <div class="detail-header">
+                <img src="/front/img/topico-item-${posicion+1}.svg" alt="topico-img" class="img-container">
+                <div class="detail-tags">
+                    <span class="curso-tag">${data.curso.nombreCurso}</span>
+                    <span class="curso-tag">${data.curso.categoria}</span>
+                    <span class="status-badge ${data.status}">${data.status}</span>
+                </div>
+                <div class="title">${data.titulo}</div>
+                <div class="detail-meta">
+                    <span class="avatar-circle">${data.autor?.charAt(0).toUpperCase()}</span>
+                    <span class="avatar-name">${data.autor}</span>
+                    <span class="date">${formatearFecha(data.fechaCreacion)}</span>
+                </div>
+                <div class="text" id="text-detail">${data.mensaje}</div>
+            </div>
 
-                return ` <div class="card-item" id="card-item-detail"> 
-                        <div>
-                        <img src="/front/img/topico-item-${posicion+1}.svg" alt="topico-img" class="img-container">
-                    </div>
-                    <div class="card-item-content" id="item-content-detail" >
-                        <div class="date">${formatearFecha(data.fechaCreacion)}</div>
-                        <div class="title">${data.titulo} </div>
-                        <div class="text" id="text-detail">${data.mensaje}</div>
-                        ${data.respuestas.map( (r) =>{
-                            return `
-                            <div class="item-response">${r.mensaje}</div>
-                            `
-                        }).join("")}
-                    </div>
-                </div>`
- }
+            <div class="detail-respuestas">
+                <p class="respuestas-titulo">Respuestas (${data.respuestas.length})</p>
+
+                ${data.respuestas.length === 0
+                    ? `<p class="sin-respuestas">Todavia no hay respuestas</p>`
+                    : data.respuestas.map(r => `
+                        <div class="item-response">
+                            <div class="response-meta">
+                                <span class="avatar-circle">${r.autor?.charAt(0).toUpperCase()}</span>
+                                <span class="avatar-name">${r.autor}</span>
+                                <span class="date">${formatearFecha(r.fechaCreacion)}</span>
+                            </div>
+                            <p class="response-text">${r.mensaje}</p>
+                        </div>
+                    `).join("")
+                }
+
+                <div class="response-form">
+                    <textarea id="nueva-respuesta" placeholder="Escribi tu respuesta..." rows="3"></textarea>
+                    <button id="btn-responder">Responder</button>
+                </div>
+            </div>
+
+        </div>
+    `;
+};
 
  const crearTopico= (categorias) =>{
     return `
