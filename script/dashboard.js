@@ -5,7 +5,8 @@
     const mainContainer = document.getElementById("main-container");
     const leftNav = document.getElementById("left-nav");
     const toggle = document.getElementById("theme-toggle");
-  
+    const avatarBtn = document.getElementById("avatar-btn");
+    const dropdown = document.getElementById("avatar-dropdown");
 
     let listaTopicos = [];
 
@@ -342,3 +343,19 @@ toggle.addEventListener("click", () => {
 // recordar preferencia al recargar
   const temaGuardado = localStorage.getItem("theme");
     if (temaGuardado) document.documentElement.setAttribute("data-theme", temaGuardado);
+
+
+    avatarBtn.addEventListener("click", (e) => {
+    e.stopPropagation(); // evita que el click se propague y cierre el menu inmediatamente
+    dropdown.classList.toggle("active");
+        });
+
+// cierra el dropdown al hacer click en cualquier otro lado
+document.addEventListener("click", () => {
+    dropdown.classList.remove("active");
+});
+
+document.getElementById("btn-logout").addEventListener("click", () => {
+    localStorage.removeItem("tokenJWT");
+    window.location.href = "/front/login.html";
+});

@@ -238,6 +238,7 @@ li:hover{
 }
 
 .avatar-wrap {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -268,6 +269,54 @@ li:hover{
     font-size: 0.82rem;
     color: var(--bg-color-lilac-dark);
     font-weight: 500;
+}
+
+.avatar-wrap {
+    position: relative; /* necesario para que el dropdown se posicione bien */
+}
+
+.avatar-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: var(--white);
+    border: 1px solid var(--header-avatar-color);
+    border-radius: 10px;
+    padding: 0.4rem;
+    min-width: 10rem;
+    z-index: 200;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.avatar-dropdown.active {
+    display: flex;
+}
+
+.avatar-dropdown button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-family: var(--font-dashboard);
+    font-size: 0.82rem;
+    color: var(--text-color);
+    text-align: left;
+    transition: background 0.2s;
+}
+
+.avatar-dropdown button:hover {
+    background: var(--notif-color);
+}
+
+#btn-logout {
+    color: #c0392b !important;
+}
+
+#btn-logout:hover {
+    background: #fde8e8 !important;
 }
 
 .search {
