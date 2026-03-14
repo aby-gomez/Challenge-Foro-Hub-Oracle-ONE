@@ -18,21 +18,26 @@
         mainContainer.innerHTML= "";
     }
     
-    const obtenerUsuario = () =>{
-        const token = localStorage.getItem("tokenJWT");
-        const leerToken = (token) => {
+    const leerToken = (token) => {
              const payload = token.split(".")[1];//el token esta separado por 3 puntos, el del medio es el payload
              const decoded = JSON.parse(atob(payload));//atob es una funcion nativa del navegador que decodfica base 64
              return decoded;
             }
-        return leerToken(token).nombre;    
+
+    const obtenerUsuario = () =>{
+        const token = localStorage.getItem("tokenJWT");
+      return leerToken(token);    
     }
 
     const mostrarUsuario = () => {
-    const nombre = obtenerUsuario();
-    document.getElementById("avatar-initials").textContent = nombre.charAt(0).toUpperCase();
-    document.getElementById("avatar-name").textContent = `Hola ${nombre}!`;
+        const nombre = obtenerUsuario().nombre;
+        document.getElementById("avatar-initials").textContent = nombre.charAt(0).toUpperCase();
+        document.getElementById("avatar-name").textContent = `Hola ${nombre}!`;
 }
+
+    const mostrarUsuarioId =() =>{
+        return obtenerUsuario().id;
+    }
     //async y await se hace con try catch
     const inicializarLista = async () =>{//async hace que la funcion devuelva una promesa 
         try {
@@ -108,6 +113,7 @@
 
 const detalleTopico = (data, id) => {
     const posicion = listaTopicos.findIndex(item => item.id == id);
+  
 
     return `
         <div class="card-item" id="card-item-detail">
@@ -118,11 +124,12 @@ const detalleTopico = (data, id) => {
                     <span class="curso-tag">${data.curso.nombreCurso}</span>
                     <span class="curso-tag">${data.curso.categoria}</span>
                     <span class="status-badge ${data.status}">${data.status}</span>
+            
                 </div>
                 <div class="title">${data.titulo}</div>
-                <div class="detail-meta">
-                    <span class="avatar-circle">${data.autor?.charAt(0).toUpperCase()}</span>
-                    <span class="avatar-name">${data.autor}</span>
+                <div class="detail-meta" id="detail-meta">
+                    <span class="avatar-circle">${data.autor.name.charAt(0).toUpperCase()}</span>
+                    <span class="avatar-name">${data.autor.name}</span>
                     <span class="date">${formatearFecha(data.fechaCreacion)}</span>
                 </div>
                 <div class="text" id="text-detail">${data.mensaje}</div>
@@ -134,10 +141,10 @@ const detalleTopico = (data, id) => {
                 ${data.respuestas.length === 0
                     ? `<p class="sin-respuestas">Todavia no hay respuestas</p>`
                     : data.respuestas.map(r => `
-                        <div class="item-response">
-                            <div class="response-meta">
-                                <span class="avatar-circle">${r.autor?.charAt(0).toUpperCase()}</span>
-                                <span class="avatar-name">${r.autor}</span>
+                        <div class="item-response" >
+                            <div class="response-meta" id="response-meta" data-response-id="${r.autor.id}">
+                                <span class="avatar-circle">${r.autor.name.charAt(0).toUpperCase()}</span>
+                                <span class="avatar-name">${r.autor.name}</span>
                                 <span class="date">${formatearFecha(r.fechaCreacion)}</span>
                             </div>
                             <p class="response-text">${r.mensaje}</p>
@@ -236,8 +243,17 @@ mainContainer.addEventListener("click", async (event) =>{//event bublbing, hacie
     if(!elementoConId) return;
     const id = elementoConId.dataset.id;
     const topico = await detallarTopico(id);
+      const idUser = mostrarUsuarioId();  
 
     document.getElementById("contenidoModal").innerHTML = detalleTopico(topico,id);
+
+    if(topico.autor.id===idUser){
+        document.getElementById("detail-meta").insertAdjacentHTML("beforeend","<p>Editar</p>");
+    }
+    if(topico.respuestas.some(r => r.autor.id === idUser)){
+
+        document.querySelectorAll(`[data-response-id="${idUser}"]`).forEach((r) =>r.insertAdjacentHTML("beforeend","<p>Editar</p>"));//query selector all porque pueden ser varias respuestas
+    }
     //  Muestra el modal
     document.getElementById("modalDetalle").classList.add("active");
     
@@ -356,6 +372,6 @@ document.addEventListener("click", () => {
 });
 
 document.getElementById("btn-logout").addEventListener("click", () => {
-    localStorage.removeItem("tokenJWT");
+    localStorage.removeItem("token");
     window.location.href = "/front/login.html";
 });

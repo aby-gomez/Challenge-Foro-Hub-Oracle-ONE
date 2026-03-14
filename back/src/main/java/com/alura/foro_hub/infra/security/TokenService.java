@@ -28,6 +28,7 @@ public class TokenService {
                     .withIssuer(ISSUER)//que servidor firma el token
                     .withSubject(usuario.getEmail())//persona que se autentico
                     .withClaim("nombre", usuario.getNombre())//asi manejo desde el front el nombre del usuario
+                    .withClaim("id", usuario.getId())
                     .withExpiresAt(fechaExpiracion())
                     .sign(algorithm);
         } catch (JWTCreationException exception){
