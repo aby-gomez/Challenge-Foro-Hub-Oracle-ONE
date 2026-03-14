@@ -1,12 +1,32 @@
 @import url(/styles/style.css);
 
 
+.header-login {
+    background: transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.header-login .logo-name {
+    color: white;
+    text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.15);
+    font-size: 3.6rem;
+    
+}
+
+.header-login .logo-name span {
+    color:var(--bg-color-lilac-dark);
+}
 
 
 
 
 .login-visual{
-    display: flex;
+     position: relative;
+        display: flex;
     flex-direction: row;
     align-items: center;
     height: 100vh;/*los hietos ocupan posicion absoluta y se salen del flujo al darle altura al main logro que se acomode un poco*/
