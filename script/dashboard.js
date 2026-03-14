@@ -4,6 +4,9 @@
 
     const mainContainer = document.getElementById("main-container");
     const leftNav = document.getElementById("left-nav");
+    const toggle = document.getElementById("theme-toggle");
+  
+
     let listaTopicos = [];
 
     const formatearFecha= (fecha) =>{
@@ -284,3 +287,14 @@ mainContainer.addEventListener("change", async (event) => {
 
 } )
 
+
+//modo oscurso
+toggle.addEventListener("click", () => {
+    const actual = document.documentElement.getAttribute("data-theme");//tomo custom atribute de la etiqueta html
+    document.documentElement.setAttribute("data-theme", actual === "dark" ? "light" : "dark");
+    localStorage.setItem("theme", actual === "dark" ? "light" : "dark");
+});
+
+// recordar preferencia al recargar
+  const temaGuardado = localStorage.getItem("theme");
+    if (temaGuardado) document.documentElement.setAttribute("data-theme", temaGuardado);

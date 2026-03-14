@@ -26,6 +26,37 @@
     --bg-color-light: #DFEAF2;
     --accent-warm: #FFB347;
 --accent-warm-light: #FFF3E0;
+ --bg-color-light-w: #f8f8ff;
+    --bg-color-lilac: #AFA9EC;
+    --bg-color-lilac-dark: #534AB7;
+    --text-color: #1a1a2e;
+    --notif-color: #eeecfb;
+    --notif-color-2: #9895c5;
+    --header-avatar-color: #e0dcf8;
+    --white: #ffffff;
+    --bg-modal: rgba(0,0,0,0.7);
+}
+[data-theme="dark"] {
+    --bg-color-light-w: #1a1a2e;
+    --bg-color-lilac: #3C3489;
+    --bg-color-lilac-dark: #AFA9EC;
+    --text-color: #f8f8ff;
+     --bg-color-w: #12122a;
+    --bg-color-light-w: #1a1a2e;
+    --bg-color-lilac: #3C3489;
+    --bg-color-lilac-dark: #AFA9EC;
+    --bg-color-light: #2a2a4a;
+    --bg-color-light-blue: #1e2a4a;
+    --bg-color-bone: #2a2a3a;
+    --bg-color-dark: #c8c4f0;
+    --text-color: #f8f8ff;
+    --text-blue: #7b9fff;
+    --bg-color-light-blue: #1e2a4a;
+    --white: #1e1e35;
+    --notif-color: #2a2a4a;
+    --notif-color-2: #AFA9EC;
+    --header-avatar-color: #3C3489;
+    --accent-warm-light: #2a1f0e;
 }
 
 header{
@@ -49,6 +80,7 @@ body{
     font-weight: var(--weight-normal);
     font-style: normal;
     font-size: 1rem;
+     color: var(--text-color);
     
 }
 ul{
@@ -95,7 +127,7 @@ li:hover{
     padding: 2rem;
     height: 3.75rem;
      background: var(--bg-color-light-w);
-    border-bottom: 1px solid #e0dcf8;
+    border-bottom: 1px solid var(--header-avatar-color);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -164,6 +196,23 @@ li:hover{
     gap: 1rem;
 }
 
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+    transition: background 0.2s;
+}
+
+.theme-toggle:hover {
+    background: #eeecfb;
+}
+
 .notif-btn {
     background: none;
     border: none;
@@ -171,11 +220,11 @@ li:hover{
     padding: 6px;
     border-radius: 50%;
     position: relative;
-    color: #9895c5;
+    color: var(--notif-color-2);
     transition: background 0.2s;
 }
 
-.notif-btn:hover { background: #eeecfb; }
+.notif-btn:hover { background: var(--notif-color); }
 
 .notif-dot {
     width: 7px;
@@ -195,12 +244,12 @@ li:hover{
     cursor: pointer;
     padding: 4px 10px 4px 4px;
     border-radius: 999px;
-    border: 1px solid #e0dcf8;
+    border: 1px solid ;
     background: white;
     transition: background 0.2s;
 }
 
-.avatar-wrap:hover { background: #eeecfb; }
+.avatar-wrap:hover { background: var(--notif-color); }
 
 .avatar-circle {
     width: 32px;
@@ -275,6 +324,7 @@ li:hover{
     background-color: var(--bg-color-light-w);
     gap:0.25rem;
     border-radius: 15px;
+    color: var(--text-color);
   
 
 }
@@ -289,7 +339,7 @@ li:hover{
 }
 .card-item:hover{
     cursor: pointer;
-   background-color: white;
+   background-color: var(--white);
    transition:  0.6s ease;
 }
 
@@ -330,7 +380,7 @@ li:hover{
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.7); 
+    background: var(--bg-modal); 
     visibility: hidden; /*en vez de display none para poder aplicar la transicion*/
     justify-content: center;
     align-items: center;
@@ -391,12 +441,17 @@ padding-bottom: 1rem;    /* Espacio antes de las respuestas */
 
 .create-topico-content{
     /*Hace que el fieldset se estire para ocupar todo el alto disponible del form */
-    background-color: white;
-    border: white;
+    background-color: var(--white);
+    border: var(--white);
     border-radius: 10px;
     border-left: 6px solid var(--bg-color-light-blue);
      padding: 4rem 1.8rem;
         
+}
+.create-topico-input input,
+#msg {
+    background-color: var(--bg-color-light-w);
+    color: var(--text-color);
 }
 
 .create-topico-input{
@@ -423,7 +478,7 @@ padding-bottom: 1rem;    /* Espacio antes de las respuestas */
     /* En lugar del outline feo, cambiamos el color del borde 
        o le damos un fondo sutil */
     border-color: var(--bg-color-light-blue);
-    background-color: #fdfdfd;
+    background-color: var(--bg-color-light-w);
     
     /* Opcional: una sombra muy suave para que resalte */
     box-shadow: 0 0 5px rgba(123, 97, 255, 0.2);
@@ -449,7 +504,7 @@ padding-bottom: 1rem;    /* Espacio antes de las respuestas */
 }
 #msg:focus{
     border-color: var(--bg-color-light-blue);
-    background-color: #fdfdfd;
+    background-color: var(--bg-color-light-w);
     
     /* Opcional: una sombra muy suave para que resalte */
     box-shadow: 0 0 5px rgba(123, 97, 255, 0.2);
@@ -513,7 +568,7 @@ padding-bottom: 1rem;    /* Espacio antes de las respuestas */
 .button-create button {
     margin-top: 2rem ;
     background-color: var(--bg-color-lilac-dark);
-    color: white;
+    color: var(--white);
     border: none;
     border-radius: 14px;
     padding: 0.75rem 2rem;
