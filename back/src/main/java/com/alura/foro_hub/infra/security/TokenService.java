@@ -27,6 +27,7 @@ public class TokenService {
             return JWT.create()
                     .withIssuer(ISSUER)//que servidor firma el token
                     .withSubject(usuario.getEmail())//persona que se autentico
+                    .withClaim("nombre", usuario.getNombre())//asi manejo desde el front el nombre del usuario
                     .withExpiresAt(fechaExpiracion())
                     .sign(algorithm);
         } catch (JWTCreationException exception){

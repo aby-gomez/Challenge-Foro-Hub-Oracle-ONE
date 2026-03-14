@@ -17,6 +17,21 @@
         mainContainer.innerHTML= "";
     }
     
+    const obtenerUsuario = () =>{
+        const token = localStorage.getItem("tokenJWT");
+        const leerToken = (token) => {
+             const payload = token.split(".")[1];//el token esta separado por 3 puntos, el del medio es el payload
+             const decoded = JSON.parse(atob(payload));//atob es una funcion nativa del navegador que decodfica base 64
+             return decoded;
+            }
+        return leerToken(token).nombre;    
+    }
+
+    const mostrarUsuario = () => {
+    const nombre = obtenerUsuario();
+    document.getElementById("avatar-initials").textContent = nombre.charAt(0).toUpperCase();
+    document.getElementById("avatar-name").textContent = `Hola ${nombre}!`;
+}
     //async y await se hace con try catch
     const inicializarLista = async () =>{//async hace que la funcion devuelva una promesa 
         try {
@@ -66,8 +81,7 @@
     
 
     const crearLista = (data) => { //data-id es un custom data attirbute info solo visible para el programador?
-        console.log(data)
-    
+       
         /*backticks en la misma linea que el return para que js no agregue el punto y coma antes y salga de la funcion*/ 
         containerTopicos.insertAdjacentHTML("afterbegin", data.content.map((i,n) => {
              return ` <div class="card-item" data-id="${i.id}"> 
@@ -211,6 +225,7 @@ const cursosDisponibles = (cursos) => {
 
  //carga lista de topicos
  inicializarLista();
+ mostrarUsuario();
 
  //muestra detalle del topico, igual debo poner async y await por llamar al fetch de detalle topico
 mainContainer.addEventListener("click", async (event) =>{//event bublbing, haciendo click en el hijo el evento sube al padre, este contenedor
