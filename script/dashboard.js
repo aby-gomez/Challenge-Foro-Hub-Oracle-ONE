@@ -76,10 +76,13 @@
                         <img src="/front/img/topico-item-${n+1}.svg" alt="topico-img" class="img-container">
                     </div>
                     <div class="card-item-content" >
-                    
-                        <div class="date">${formatearFecha(i.fechaCreacion)}</div>
+                        <div class="card-top-row">
+                            <div class="date">${formatearFecha(i.fechaCreacion)}</div>
+                            <div class="status-badge ${i.status}">${i.status}</div>
+                        </div>
                         <div class="title">${i.titulo} </div>
                         <div class="text">${i.mensaje}</div>
+                        <div class="curso-tag">${i.nombreCurso}</div>
                         
                     </div>
                 </div>`

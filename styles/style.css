@@ -333,14 +333,60 @@ li:hover{
     flex-direction: column;
     gap: 1rem;
     padding: 0 1.25rem;
+    flex:1;
     
-    
-
 }
 .card-item:hover{
     cursor: pointer;
    background-color: var(--white);
    transition:  0.6s ease;
+}
+
+.card-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.status-badge {
+    font-size: 0.65rem;
+    font-weight: 500;
+    border-radius: 10px;
+    padding: 2px 7px;
+}
+
+.ABIERTO {
+    background-color: #d4f5e2;
+    color: #1a7a45;
+}
+
+.CERRADO {
+    background-color: #fde8e8;
+    color: #c0392b;
+}
+
+.curso-tag {
+    
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background-color: var(--accent-warm-light);
+    color: #b36b00;
+    font-size: 0.65rem;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 2px 7px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.curso-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-warm);
+    flex-shrink: 0;
 }
 
 .img-container{
@@ -359,8 +405,11 @@ li:hover{
 }
 .title{
    font-weight: var(--weight-bold);
-    min-height: 2rem;
+    height: 1.2rem;
     font-size: 0.9rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     
     
 }
