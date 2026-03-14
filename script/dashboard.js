@@ -126,12 +126,13 @@ const detalleTopico = (data, id) => {
                     <span class="status-badge ${data.status}">${data.status}</span>
             
                 </div>
-                <div class="title">${data.titulo}</div>
                 <div class="detail-meta" id="detail-meta">
                     <span class="avatar-circle">${data.autor.name.charAt(0).toUpperCase()}</span>
                     <span class="avatar-name">${data.autor.name}</span>
                     <span class="date">${formatearFecha(data.fechaCreacion)}</span>
                 </div>
+                <div class="title">${data.titulo}</div>
+                
                 <div class="text" id="text-detail">${data.mensaje}</div>
             </div>
 
@@ -248,15 +249,28 @@ mainContainer.addEventListener("click", async (event) =>{//event bublbing, hacie
     document.getElementById("contenidoModal").innerHTML = detalleTopico(topico,id);
 
     if(topico.autor.id===idUser){
-        document.getElementById("detail-meta").insertAdjacentHTML("beforeend","<p>Editar</p>");
+        document.getElementById("detail-meta").insertAdjacentHTML("beforeend","<p id='editar'>Editar</p>");
     }
     if(topico.respuestas.some(r => r.autor.id === idUser)){
 
-        document.querySelectorAll(`[data-response-id="${idUser}"]`).forEach((r) =>r.insertAdjacentHTML("beforeend","<p>Editar</p>"));//query selector all porque pueden ser varias respuestas
+        document.querySelectorAll(`[data-response-id="${idUser}"]`).forEach((r) =>r.insertAdjacentHTML("beforeend","<p >Editar</p>"));//query selector all porque pueden ser varias respuestas
     }
     //  Muestra el modal
     document.getElementById("modalDetalle").classList.add("active");
     
+})
+
+mainContainer.addEventListener("click", (event) =>{
+    
+    const e= event.target.closest("#editar");
+    if(!e) return;
+
+    const titulo= document.getElementById("contenidoModal").querySelector(".title").textContent;//me aseguro que la clase a la que me refiero es la que este dentro del modal
+    const mensaje= document.getElementById("contenidoModal").querySelector(".text").textContent;
+document.getElementById("contenidoModal").querySelector(".title").innerHTML = `<input type='text' value='${titulo}'>`;
+
+document.getElementById("contenidoModal").querySelector(".text").innerHTML = `<input type='text' value='${mensaje}'>`;
+
 })
 
 //sale del detalle de topico
