@@ -36,6 +36,14 @@
     border-radius: 15px;
  
 }
+#card-item-detail .img-container {
+    
+   
+    
+    padding: 0;
+    border-radius: 15px;
+}
+
 .detail-header {
     display: flex;
     flex-direction: column;
@@ -219,7 +227,7 @@ padding-bottom: 1rem;    /* Espacio antes de las respuestas */
        color: var(--text-color);
      
 }
-.editar-topico:focus {
+.editar-topico:hover {
     /* En lugar del outline feo, cambiamos el color del borde 
        o le damos un fondo sutil */
     border-color: var(--bg-color-light-blue);

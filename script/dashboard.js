@@ -73,7 +73,7 @@
 
  //muestra detalle del topico, igual debo poner async y await por llamar al fetch de detalle topico
 mainContainer.addEventListener("click", async (event) =>{//event bublbing, haciendo click en el hijo el evento sube al padre, este contenedor
-
+    
     // Buscamos el elemento que tenga el atributo data-id partiendo desde donde se hizo clic
     const elementoConId = event.target.closest("[data-id]");
     const imgId = event.target.closest("[data-img-id]");
@@ -90,18 +90,18 @@ mainContainer.addEventListener("click", async (event) =>{//event bublbing, hacie
     //editar solo si es autor
     if(topico.autor.id === idUser){
         document.getElementById("detail-meta").insertAdjacentHTML("beforeend",`
-        <div class ="acciones-topico">
+        <div class ="acciones-topico" id="acciones-topico">
             <div id='edicion-topico'>
                 <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
                 <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
                 </svg>
-                Editar
+            
             </div>
             <div id='eliminar-topico'>
                 <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
                     <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                 </svg>
-                Eliminar
+                
             </div>
         </div>`
         );
@@ -116,8 +116,13 @@ mainContainer.addEventListener("click", async (event) =>{//event bublbing, hacie
 
 //editar un tópico
 mainContainer.addEventListener("click", (event) =>{
+    
     const e= event.target.closest("#edicion-topico");
-    if(!e) return;
+    console.log(e);
+   if(!e) return;
+   
+    
+    
     
     const titulo= document.getElementById("contenidoModal").querySelector(".title").textContent;//me aseguro que la clase a la que me refiero es la que este dentro del modal
     const mensaje= document.getElementById("contenidoModal").querySelector(".text").textContent;
@@ -134,9 +139,13 @@ mainContainer.addEventListener("click", (event) =>{//nombre del parametro OBJETO
     const modal = document.getElementById("modalDetalle");
     if(!modal) return;
 
-    const card = event.target.closest(".contenidoModal");
-    if (card) return;
+ const card = event.target.closest(".contenidoModal");
+console.log(card);
+if (card) return;
 
+const edicion = event.target.closest("#card-item-detail");
+console.log(edicion)
+if(edicion) return;
      // Solo cerramos si el modal está activo
     if (modal.classList.contains("active")) {
         document.getElementById("contenidoModal").innerHTML = "";
