@@ -249,7 +249,7 @@ mainContainer.addEventListener("click", async (event) =>{//event bublbing, hacie
     document.getElementById("contenidoModal").innerHTML = detalleTopico(topico,id);
 
     if(topico.autor.id===idUser){
-        document.getElementById("detail-meta").insertAdjacentHTML("beforeend","<p id='editar'>Editar</p>");
+        document.getElementById("detail-meta").insertAdjacentHTML("beforeend","<p id='editar-topico'>Editar</p>");
     }
     if(topico.respuestas.some(r => r.autor.id === idUser)){
 
@@ -260,17 +260,20 @@ mainContainer.addEventListener("click", async (event) =>{//event bublbing, hacie
     
 })
 
+//editar un tópico
 mainContainer.addEventListener("click", (event) =>{
     
-    const e= event.target.closest("#editar");
+    const e= event.target.closest("#editar-topico");
     if(!e) return;
-
+    
     const titulo= document.getElementById("contenidoModal").querySelector(".title").textContent;//me aseguro que la clase a la que me refiero es la que este dentro del modal
     const mensaje= document.getElementById("contenidoModal").querySelector(".text").textContent;
-document.getElementById("contenidoModal").querySelector(".title").innerHTML = `<input type='text' value='${titulo}'>`;
+    
+    document.getElementById("contenidoModal").querySelector(".title").innerHTML = `<input type='text' value='${titulo}' class="editar-topico" name = 'text'>`;//inner html reemplaza
+    document.getElementById("contenidoModal").querySelector(".text").innerHTML = `<textarea class="editar-topico">${mensaje}</textarea>`;
 
-document.getElementById("contenidoModal").querySelector(".text").innerHTML = `<input type='text' value='${mensaje}'>`;
-
+    document.getElementById("contenidoModal").querySelector(".title").classList.add("editar");
+  
 })
 
 //sale del detalle de topico
@@ -386,6 +389,6 @@ document.addEventListener("click", () => {
 });
 
 document.getElementById("btn-logout").addEventListener("click", () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("tokenJWT");
     window.location.href = "/front/login.html";
 });

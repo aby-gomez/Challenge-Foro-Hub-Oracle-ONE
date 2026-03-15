@@ -628,6 +628,54 @@ padding-bottom: 1rem;    /* Espacio antes de las respuestas */
     font-size: 0.7rem;
 }
     
+/*editar topico*/
+.editar{/*agrego esta clase a title porque sino afecta el estilo de cuando no se muestra el detalle del topico*/
+    height: 2rem;
+    width: 100%;
+}
+.title input{
+        
+        border: 1px solid;/*quita el sombreado gris*/
+        width: 100%;      /* Ocupa todo el ancho que te dé el main */
+        max-width: 37rem; /* ..pero nunca pases de 496px. */
+        height: 2rem;
+        border-color: var(--bg-color-light);
+        border-radius: 14px;
+        border-width: 1px;
+        outline: none;/*al hacer click no quede un borde negro*/
+        appearance: none; /*apariencia que de el naevagor por defecto*/
+       padding: 0 1rem;
+     
+       
+
+}
+.text textarea{
+    overflow-y: auto;/*aparece el scroll si hay overflow vertical*/
+        margin-top: auto;
+        resize: none;
+        height: 5rem;
+         border: 1px solid;/*quita el sombreado gris*/
+              /* Ocupa todo el ancho que te dé el main */
+        max-width: 37rem; /* ..pero nunca pases de 496px. */
+        width: 100%;
+        border-color: var(--bg-color-light);
+        border-radius: 14px;
+        border-width: 1px;
+        outline: none;/*al hacer click no quede un borde negro*/
+        appearance: none; /*apariencia que de el naevagor por defecto*/
+       padding: 0.8rem;
+       font-family: var(--font-main);
+     
+}
+.editar-topico:focus {
+    /* En lugar del outline feo, cambiamos el color del borde 
+       o le damos un fondo sutil */
+    border-color: var(--bg-color-light-blue);
+    background-color: var(--bg-color-light-w);
+    
+    /* Opcional: una sombra muy suave para que resalte */
+    box-shadow: 0 0 5px rgba(123, 97, 255, 0.2);
+}
 
 /*crear topico*/
 .form-create-topico{
