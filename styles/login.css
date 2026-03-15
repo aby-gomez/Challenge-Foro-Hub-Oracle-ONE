@@ -1,5 +1,5 @@
 @import url(/styles/style.css);
-
+@import url(./cards.css);
 
 .header-login {
     background: transparent;

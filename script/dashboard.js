@@ -10,7 +10,6 @@
     const avatarBtn = document.getElementById("avatar-btn");
     const dropdown = document.getElementById("avatar-dropdown");
     
-
     let listaTopicos = [];
 
     

@@ -1,0 +1,150 @@
+/*crear topico*/
+.form-create-topico{
+    width: 100%;
+    max-width: 77vw;
+    height: 51vh;
+    display: flex;
+    flex-direction: column;
+    
+    
+  
+}
+
+.create-topico-content{
+    /*Hace que el fieldset se estire para ocupar todo el alto disponible del form */
+    background-color: var(--white);
+    border: var(--white);
+    border-radius: 10px;
+    border-left: 6px solid var(--bg-color-light-blue);
+     padding: 4rem 1.8rem;
+        
+}
+.create-topico-input input,
+#msg {
+    background-color: var(--bg-color-light-w);
+    color: var(--text-color);
+}
+
+.create-topico-input{
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: auto 1fr;
+   /*loma el ancho total del contenedor y lo divide equitativamente con los hijos*/
+    column-gap: 2rem;
+    width: 100%;
+    input{
+        
+        border: 1px solid;/*quita el sombreado gris*/
+        width: 100%;      /* Ocupa todo el ancho que te dé el main */
+        max-width: 31rem; /* ..pero nunca pases de 496px. */
+        height: 3.12rem;
+        border-color: var(--bg-color-light);
+        border-radius: 14px;
+        border-width: 1px;
+        outline: none;/*al hacer click no quede un borde negro*/
+        appearance: none; /*apariencia que de el naevagor por defecto*/
+       padding: 0 1rem;
+    }
+    input:focus {
+    /* En lugar del outline feo, cambiamos el color del borde 
+       o le damos un fondo sutil */
+    border-color: var(--bg-color-light-blue);
+    background-color: var(--bg-color-light-w);
+    
+    /* Opcional: una sombra muy suave para que resalte */
+    box-shadow: 0 0 5px rgba(123, 97, 255, 0.2);
+    }
+}
+@media (max-width: 768px) {
+    .create-topico-input {
+        grid-template-columns: 1fr;
+    }
+}
+#msg{
+    resize: none;
+    height: 8rem;
+     border: 1px solid;/*quita el sombreado gris*/
+              /* Ocupa todo el ancho que te dé el main */
+        max-width: 31rem; /* ..pero nunca pases de 496px. */
+        width: 100%;
+        border-color: var(--bg-color-light);
+        border-radius: 14px;
+        border-width: 1px;
+        outline: none;/*al hacer click no quede un borde negro*/
+        appearance: none; /*apariencia que de el naevagor por defecto*/
+       padding: 0.8rem;
+}
+#msg:focus{
+    border-color: var(--bg-color-light-blue);
+    background-color: var(--bg-color-light-w);
+    
+    /* Opcional: una sombra muy suave para que resalte */
+    box-shadow: 0 0 5px rgba(123, 97, 255, 0.2);
+}
+
+.form-right{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+   
+}
+
+#categorie-select{
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    max-width: 14rem;
+}
+
+#curso-select{
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    max-width: 14rem;
+}
+
+.create-topico-input select {
+    
+    border: 2px solid var(--bg-color-lilac);
+    width: auto;
+    max-width: 31rem;
+    height: 3.12rem;
+    border-radius: 20px;
+    outline: none;
+    appearance: none;
+    padding: 0 1.2rem;
+    background-color: var(--bg-color-light-w);
+    cursor: pointer;
+    color: var(--bg-color-lilac-dark);
+    font-family: var(--font-dashboard);
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+}
+
+.create-topico-input select:focus {
+    border-color: var(--accent-warm);
+    background-color: var(--accent-warm-light);
+    box-shadow: 0 0 8px rgba(255, 179, 71, 0.3);
+    cursor: pointer;
+
+}
+
+
+.button-create button {
+    margin-top: 2rem ;
+    background-color: var(--bg-color-lilac-dark);
+    color: var(--white);
+    border: none;
+    border-radius: 14px;
+    padding: 0.75rem 2rem;
+    font-family: var(--font-dashboard);
+    font-size: 0.9rem;
+    font-weight: var(--weight-bold);
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.button-create button:hover {
+    background-color: var(--accent-warm);
+    transform: translateY(-2px);/*mueve el botón 2px hacia arriba*/
+}
