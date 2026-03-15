@@ -1,7 +1,7 @@
     import {getDatos, getDatosPorId} from "./fetch.js"; //al estar marcadas solo con export las importo entre llaves, export default solo permite exportar 1 funcion
-    import { crearLista } from "./topicos.js";
-    import { formatearFecha } from "./utils.js";
-    
+    import { crearLista, detalleTopico, crearTopico ,cursosDisponibles, leftNavInicio} from "./topicos.js";
+    import { obtenerUsuario,mostrarUsuarioId } from "./auth.js";
+
     let containerTopicos = document.getElementById("container");/*let porque este elemento es dinamico, al estar recargando va a cambiar varias veces hacia donde hace referencia  */ 
 
     const mainContainer = document.getElementById("main-container");
@@ -9,36 +9,22 @@
     const toggle = document.getElementById("theme-toggle");
     const avatarBtn = document.getElementById("avatar-btn");
     const dropdown = document.getElementById("avatar-dropdown");
+    
 
     let listaTopicos = [];
 
     
-
     const limpiarMain = () =>{
         mainContainer.innerHTML= "";
     }
     
-    const leerToken = (token) => {
-             const payload = token.split(".")[1];//el token esta separado por 3 puntos, el del medio es el payload
-             const decoded = JSON.parse(atob(payload));//atob es una funcion nativa del navegador que decodfica base 64
-             return decoded;
-            }
-
-    const obtenerUsuario = () =>{
-        const token = localStorage.getItem("tokenJWT");
-      return leerToken(token);    
-    }
-
-    const mostrarUsuario = () => {
+   const mostrarUsuario = () => {
         const nombre = obtenerUsuario().nombre;
         document.getElementById("avatar-initials").textContent = nombre.charAt(0).toUpperCase();
         document.getElementById("avatar-name").textContent = `Hola ${nombre}!`;
-}
-
-    const mostrarUsuarioId =() =>{
-        return obtenerUsuario().id;
     }
-    //async y await se hace con try catch
+
+   //async y await se hace con try catch
     const inicializarLista = async () =>{//async hace que la funcion devuelva una promesa 
         try {
             const respuesta = await getDatos("GET", "/topicos");//pausa la ejecucion y espera una promesa resuelta
@@ -51,14 +37,10 @@
     }
 
     const detallarTopico = async (id) =>{//async hace que la funcion devuelva una promesa 
-
-
         try {
             const respuesta = await getDatosPorId("GET", "/topicos",`/${id}`);//pausa la ejecucion y espera una promesa resuelta
             return respuesta;
-            
-
-        } catch (error) {
+            } catch (error) {
             console.error("Error al cargar tópico:", error);
             //  podría mostrar un mensaje de error en el DOM para el usuario
         }
@@ -75,139 +57,16 @@
     }
 
     const traerCursosPorCategoria = async (categoria) =>{
-    try{        
-    return await getDatos("GET", `/cursos/${categoria}`);
-
-    }catch (error) {
+        try{ return await getDatos("GET", `/cursos/${categoria}`);
+        }catch (error) {
             console.error("Error al cargar cursos:", error);
             //  podría mostrar un mensaje de error en el DOM para el usuario
         }
- }
-
-    
-
-  
-
-const detalleTopico = (data, id) => {
-    const posicion = listaTopicos.findIndex(item => item.id == id);
-  
-
-    return `
-        <div class="card-item" id="card-item-detail">
-
-            <div class="detail-header">
-                <img src="/front/img/topico-item-${posicion+1}.svg" alt="topico-img" class="img-container">
-                <div class="detail-tags">
-                    <span class="curso-tag">${data.curso.nombreCurso}</span>
-                    <span class="curso-tag">${data.curso.categoria}</span>
-                    <span class="status-badge ${data.status}">${data.status}</span>
-            
-                </div>
-                <div class="detail-meta" id="detail-meta">
-                    <span class="avatar-circle">${data.autor.name.charAt(0).toUpperCase()}</span>
-                    <span class="avatar-name">${data.autor.name}</span>
-                    <span class="date">${formatearFecha(data.fechaCreacion)}</span>
-                </div>
-                <div class="title">${data.titulo}</div>
-                
-                <div class="text" id="text-detail">${data.mensaje}</div>
-            </div>
-
-            <div class="detail-respuestas">
-                <p class="respuestas-titulo">Respuestas (${data.respuestas.length})</p>
-
-                ${data.respuestas.length === 0
-                    ? `<p class="sin-respuestas">Todavia no hay respuestas</p>`
-                    : data.respuestas.map(r => `
-                        <div class="item-response" >
-                            <div class="response-meta" id="response-meta" data-response-id="${r.autor.id}">
-                                <span class="avatar-circle">${r.autor.name.charAt(0).toUpperCase()}</span>
-                                <span class="avatar-name">${r.autor.name}</span>
-                                <span class="date">${formatearFecha(r.fechaCreacion)}</span>
-                            </div>
-                            <p class="response-text">${r.mensaje}</p>
-                        </div>
-                    `).join("")
-                }
-
-                <div class="response-form">
-                    <textarea id="nueva-respuesta" placeholder="Escribi tu respuesta..." rows="3"></textarea>
-                    <button id="btn-responder">Responder</button>
-                </div>
-            </div>
-
-        </div>
-    `;
-};
-
- const crearTopico= (categorias) =>{
-    return `
-            <form method="" class="form-create-topico" id="create-topico">
-                <fieldset class="create-topico-content">
-                    <legend></legend>
-                    
-                    <div class="create-topico-input">
-                        
-                        <div class="form-left">
-                            <label for="text">Título</label>
-                            <input type="text" id="text" name="text" placeholder="Título" required>
-                            <label for="msg">Mensaje</label>
-                            <textarea id="msg" name="msj" placeholder="Tu comentario" required></textarea>
-                        </div>
-
-                        <div class="form-right">
-                            <div id="categorie-select">
-                                <label for="categoria">Seleccioná la categoría:</label>
-                                <select id="categoria" name="categoria">
-                                    ${categorias.map((r) => `
-                                        <option value="${r.categoria}">${r.categoria}</option>
-                                    `).join("")}
-                                </select>
-                            </div>
-                            <div id="curso-select"></div>
-                        </div>
-
-                    </div>
-
-                    <div class="button-create">
-                        <button type="submit">Crear</button>
-                    </div>
-                    
-                </fieldset>
-            </form>
-    `
-
- }
-
-const cursosDisponibles = (cursos) => {
-    const cursoCreado = document.getElementById("curso-select");
-  
-        cursoCreado.innerHTML="";
-    
-    if (cursos.length === 0) {
-        cursoCreado.insertAdjacentHTML(
-            "afterbegin",
-            `<p>No hay cursos disponibles en esa categoria</p>`
-        );
-        return;
-    } else {
-        const html = `
-            <div id="curso-select"=>
-                <label for="curso">Seleccioná el curso: </label>
-                <select id="curso" name="curso">
-                    ${cursos.map((c) => `
-                        <option value="${c.cursoNombre}" data-curso="${c.cursoNombre}">
-                            ${c.cursoNombre}
-                        </option>
-                    `).join("")}
-                </select>
-            </div>
-        `;
-        cursoCreado.insertAdjacentHTML("afterbegin", html);
     }
-};
 
- //inicio de ejecucion del script
+    
+
+//inicio de ejecucion del script
 
  //carga lista de topicos
  inicializarLista();
@@ -219,27 +78,29 @@ mainContainer.addEventListener("click", async (event) =>{//event bublbing, hacie
     // Buscamos el elemento que tenga el atributo data-id partiendo desde donde se hizo clic
     const elementoConId = event.target.closest("[data-id]");
     if(!elementoConId) return;
+
     const id = elementoConId.dataset.id;
     const topico = await detallarTopico(id);
-      const idUser = mostrarUsuarioId();  
+    const idUser = mostrarUsuarioId();  
 
-    document.getElementById("contenidoModal").innerHTML = detalleTopico(topico,id);
+    //solo para manejar que imagen le corresponde
+    const posicion = listaTopicos.findIndex(t => t.id == id);
+    document.getElementById("contenidoModal").innerHTML = detalleTopico(topico,posicion);
 
-    if(topico.autor.id===idUser){
+    //editar solo si es autor
+    if(topico.autor.id === idUser){
         document.getElementById("detail-meta").insertAdjacentHTML("beforeend","<p id='editar-topico'>Editar</p>");
     }
     if(topico.respuestas.some(r => r.autor.id === idUser)){
-
         document.querySelectorAll(`[data-response-id="${idUser}"]`).forEach((r) =>r.insertAdjacentHTML("beforeend","<p >Editar</p>"));//query selector all porque pueden ser varias respuestas
     }
+
     //  Muestra el modal
     document.getElementById("modalDetalle").classList.add("active");
-    
 })
 
 //editar un tópico
 mainContainer.addEventListener("click", (event) =>{
-    
     const e= event.target.closest("#editar-topico");
     if(!e) return;
     
@@ -289,82 +150,63 @@ mainContainer.addEventListener("click", (event) =>{//nombre del parametro OBJETO
 
 //crear topico, no olvidar que el contexto debe ser async para esperar una promesa
 leftNav.addEventListener("click", async (event) =>{
-     const link = event.target.closest('li'); // Buscamos el link más cercano
+    const link = event.target.closest('li'); // Buscamos el link más cercano
     if (!link) return;
 
     limpiarMain();
     document.querySelectorAll('.nav-dash ul li ').forEach(a => a.classList.remove('active'));
 
    if(event.target.closest("#inicio")){
-            
-            const inicio = document.getElementById("inicio");
-            inicio.classList.add("active");
-            
-            mainContainer.innerHTML = `
-            <div class="card-container" id="container"></div>
-            <div id="modalDetalle">
-            <div id="contenidoModal" class="contenidoModal">
-            </div>
-             </div>
-            `;
+            leftNavInicio();
 
             //reasigno el valor de el contenedor
             containerTopicos = document.getElementById("container");
-           
-
-             // 2. Ahora que el #container existe en el DOM, le pedimos a crearLista que lo llene
-            // Nota: Tu función crearLista ya debería tener el document.getElementById("container") adentro
+            // Ahora que el #container existe en el DOM, le pedimos a crearLista que lo llene
             crearLista({content: listaTopicos});
         }
-
     if(event.target.closest("#crear-topico")){
-             const respuesta = await traerCategorias();
-               
-            mainContainer.insertAdjacentHTML("afterbegin", crearTopico(respuesta));
+
+            const categorias = await traerCategorias();
+            mainContainer.insertAdjacentHTML("afterbegin", crearTopico(categorias));
             const crear = document.getElementById("crear-topico");
             crear.classList.add("active");
         }
 })
 
-
+//trae los cursos en crear tópico
 mainContainer.addEventListener("change", async (event) => {
-    console.log("se disparo el evento")
-    
     const categoriaConId = event.target.closest("#categoria");
-     if(!categoriaConId) return;
+    if(!categoriaConId) return;
 
-     const categoriaSeleccionada = event.target.value;
-    console.log(categoriaSeleccionada);
+    //trae el valor de la categoria del select
+    const categoriaSeleccionada = event.target.value;
     const cursos = await traerCursosPorCategoria(categoriaSeleccionada);
     cursosDisponibles(cursos);
-
-
-
 } )
 
 
-//modo oscurso
+//modo oscuro
 toggle.addEventListener("click", () => {
     const actual = document.documentElement.getAttribute("data-theme");//tomo custom atribute de la etiqueta html
     document.documentElement.setAttribute("data-theme", actual === "dark" ? "light" : "dark");
     localStorage.setItem("theme", actual === "dark" ? "light" : "dark");
+    
+    //recordar preferencia al recargar
+    const temaGuardado = localStorage.getItem("theme");
+    if (temaGuardado) document.documentElement.setAttribute("data-theme", temaGuardado);
 });
 
-// recordar preferencia al recargar
-  const temaGuardado = localStorage.getItem("theme");
-    if (temaGuardado) document.documentElement.setAttribute("data-theme", temaGuardado);
-
-
-    avatarBtn.addEventListener("click", (e) => {
+//abre dropdown de usuario
+avatarBtn.addEventListener("click", (e) => {
     e.stopPropagation(); // evita que el click se propague y cierre el menu inmediatamente
     dropdown.classList.toggle("active");
         });
-
-// cierra el dropdown al hacer click en cualquier otro lado
-document.addEventListener("click", () => {
+    // cierra el dropdown al hacer click en cualquier otro lado
+    document.addEventListener("click", () => {
     dropdown.classList.remove("active");
 });
 
+//cerrar sesión
 document.getElementById("btn-logout").addEventListener("click", () => {
     localStorage.removeItem("tokenJWT");
     window.location.href = "/front/login.html";
