@@ -8,7 +8,7 @@
              return ` <div class="card-item" data-id="${i.id}"> 
                        
                     <div>
-                        <img src="/front/img/topico-item-${n+1}.svg" alt="topico-img" class="img-container">
+                        <img src="/front/img/topico-item-${n% 8 + 1}.svg" alt="topico-img" class="img-container" data-img-id="${n% 8 + 1}">
                     </div>
                     <div class="card-item-content" >
                         <div class="card-top-row">
@@ -17,7 +17,7 @@
                         </div>
                         <div class="title">${i.titulo} </div>
                         <div class="text">${i.mensaje}</div>
-                        <div class="curso-tag">${i.nombreCurso}</div>
+                        <div class="curso-tag">${i.nombreCurso}</div>   
                         
                     </div>
                 </div>`
@@ -35,7 +35,7 @@ export const detalleTopico = (data,posicion) => {
         <div class="card-item" id="card-item-detail">
 
             <div class="detail-header">
-                <img src="/front/img/topico-item-${posicion+1}.svg" alt="topico-img" class="img-container">
+                <img src="/front/img/topico-item-${posicion}.svg" alt="topico-img" class="img-container">
                 <div class="detail-tags">
                     <span class="curso-tag">${data.curso.nombreCurso}</span>
                     <span class="curso-tag">${data.curso.categoria}</span>
@@ -47,9 +47,11 @@ export const detalleTopico = (data,posicion) => {
                     <span class="avatar-name">${data.autor.name}</span>
                     <span class="date">${formatearFecha(data.fechaCreacion)}</span>
                 </div>
-                <div class="title">${data.titulo}</div>
-                
-                <div class="text" id="text-detail">${data.mensaje}</div>
+                <div class ="detail-topic">
+                    <div class="title">${data.titulo}</div>
+                    
+                    <div class="text" id="text-detail">${data.mensaje}</div>
+                </div>
             </div>
 
             <div class="detail-respuestas">

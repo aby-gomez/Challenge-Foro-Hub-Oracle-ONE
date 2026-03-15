@@ -42,6 +42,8 @@
     gap: 0.6rem;
     padding: 1.2rem 1.5rem;
     border-bottom: 1px solid var(--header-avatar-color);/*genera la linea gris entre la pregunta y las respuestas*/
+    
+    border-radius: 15px;
 }
 
 .detail-tags {
@@ -53,7 +55,28 @@
 .detail-meta {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.8rem;
+    
+    
+}
+.acciones-topico{
+    margin-left: auto; /*para que se pegue a la derecha*/
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+}
+
+#edicion-topico{
+    color: var(--text-green);
+}
+
+#eliminar-topico{
+    color: var(--text-coral);
+}
+.detail-topic{
+   display: flex;
+   flex-direction: column;
+   gap: 1.7rem;
 }
 
 .detail-respuestas {
@@ -171,7 +194,8 @@ padding-bottom: 1rem;    /* Espacio antes de las respuestas */
         outline: none;/*al hacer click no quede un borde negro*/
         appearance: none; /*apariencia que de el naevagor por defecto*/
        padding: 0 1rem;
-     
+      background-color: var(--white);
+       color: var(--text-color);
        
 
 }
@@ -191,6 +215,8 @@ padding-bottom: 1rem;    /* Espacio antes de las respuestas */
         appearance: none; /*apariencia que de el naevagor por defecto*/
        padding: 0.8rem;
        font-family: var(--font-main);
+       background-color: var(--white);
+       color: var(--text-color);
      
 }
 .editar-topico:focus {

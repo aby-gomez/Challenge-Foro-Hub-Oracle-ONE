@@ -76,19 +76,35 @@ mainContainer.addEventListener("click", async (event) =>{//event bublbing, hacie
 
     // Buscamos el elemento que tenga el atributo data-id partiendo desde donde se hizo clic
     const elementoConId = event.target.closest("[data-id]");
-    if(!elementoConId) return;
+    const imgId = event.target.closest("[data-img-id]");
+    if(!elementoConId|| !imgId) return;
 
     const id = elementoConId.dataset.id;
+    const idImg = imgId.dataset.imgId;
+
     const topico = await detallarTopico(id);
     const idUser = mostrarUsuarioId();  
 
-    //solo para manejar que imagen le corresponde
-    const posicion = listaTopicos.findIndex(t => t.id == id);
-    document.getElementById("contenidoModal").innerHTML = detalleTopico(topico,posicion);
+    document.getElementById("contenidoModal").innerHTML = detalleTopico(topico,idImg);
 
     //editar solo si es autor
     if(topico.autor.id === idUser){
-        document.getElementById("detail-meta").insertAdjacentHTML("beforeend","<p id='editar-topico'>Editar</p>");
+        document.getElementById("detail-meta").insertAdjacentHTML("beforeend",`
+        <div class ="acciones-topico">
+            <div id='edicion-topico'>
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                </svg>
+                Editar
+            </div>
+            <div id='eliminar-topico'>
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                </svg>
+                Eliminar
+            </div>
+        </div>`
+        );
     }
     if(topico.respuestas.some(r => r.autor.id === idUser)){
         document.querySelectorAll(`[data-response-id="${idUser}"]`).forEach((r) =>r.insertAdjacentHTML("beforeend","<p >Editar</p>"));//query selector all porque pueden ser varias respuestas
@@ -100,7 +116,7 @@ mainContainer.addEventListener("click", async (event) =>{//event bublbing, hacie
 
 //editar un tópico
 mainContainer.addEventListener("click", (event) =>{
-    const e= event.target.closest("#editar-topico");
+    const e= event.target.closest("#edicion-topico");
     if(!e) return;
     
     const titulo= document.getElementById("contenidoModal").querySelector(".title").textContent;//me aseguro que la clase a la que me refiero es la que este dentro del modal
@@ -190,10 +206,11 @@ toggle.addEventListener("click", () => {
     document.documentElement.setAttribute("data-theme", actual === "dark" ? "light" : "dark");
     localStorage.setItem("theme", actual === "dark" ? "light" : "dark");
     
-    //recordar preferencia al recargar
+    
+});
+//recordar preferencia al recargar
     const temaGuardado = localStorage.getItem("theme");
     if (temaGuardado) document.documentElement.setAttribute("data-theme", temaGuardado);
-});
 
 //abre dropdown de usuario
 avatarBtn.addEventListener("click", (e) => {

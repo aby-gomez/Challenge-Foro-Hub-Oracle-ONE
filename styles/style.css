@@ -39,6 +39,8 @@
     --header-avatar-color: #e0dcf8;
     --white: #ffffff;
     --bg-modal: rgba(0,0,0,0.7);
+    --text-green: #00C896;
+    --text-coral: #E05A8A;
 }
 [data-theme="dark"] {
     --bg-color-light-w: #1a1a2e;
@@ -61,6 +63,8 @@
     --notif-color-2: #AFA9EC;
     --header-avatar-color: #3C3489;
     --accent-warm-light: #2a1f0e;
+    --text-green: #00FFB3;
+    --text-coral: #FF6BA8;
 }
 
 
