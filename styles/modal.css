@@ -77,7 +77,9 @@
 #edicion-topico{
     color: var(--text-green);
 }
-
+#edicion-topico svg {
+    pointer-events: none;
+}
 #eliminar-topico{
     color: var(--text-coral);
 }

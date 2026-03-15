@@ -49,7 +49,6 @@ export const detalleTopico = (data,posicion) => {
                 </div>
                 <div class ="detail-topic">
                     <div class="title">${data.titulo}</div>
-                    
                     <div class="text" id="text-detail">${data.mensaje}</div>
                 </div>
             </div>
