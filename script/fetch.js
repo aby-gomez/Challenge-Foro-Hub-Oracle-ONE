@@ -49,3 +49,21 @@ export  function getDatosPorId (metodo,endpoint,id){
     })
    
 }
+
+export function putDatos(endpoint,body){
+ return fetch (`${baseURL}${endpoint}`,{
+            method: "PUT",
+            headers: { 'Content-Type': 'application/json' ,
+                'accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },//los content type se dividen en tipo/subtipo
+            body: body,
+})
+ .then(response => {
+        if(response.ok){
+            return response.json();
+        }else{
+        throw new Error(`Error ${response.status}`);
+        }
+    })
+}

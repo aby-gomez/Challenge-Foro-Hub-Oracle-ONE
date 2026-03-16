@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public record DtoDetalleTopico(
+        Long id,
         String titulo,
         String mensaje,
         Instant fechaCreacion,
@@ -21,7 +22,9 @@ public record DtoDetalleTopico(
         List<DtoListaRespuestas> respuestas
 ) {
     public DtoDetalleTopico(Topico topico){
-        this( topico.getTitulo(),
+        this(
+                topico.getId(),
+                topico.getTitulo(),
                 topico.getMensaje(),
                 topico.getFechaCreacion(),
                 topico.getStatus(),

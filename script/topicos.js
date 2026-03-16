@@ -32,7 +32,7 @@ export const detalleTopico = (data,posicion) => {
   
 
     return `
-        <div class="card-item" id="card-item-detail">
+        <div class="card-item" id="card-item-detail" data-topico-id="${data.id}">
 
             <div class="detail-header">
                 <img src="/front/img/topico-item-${posicion}.svg" alt="topico-img" class="img-container">

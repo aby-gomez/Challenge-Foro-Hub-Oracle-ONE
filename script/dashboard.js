@@ -1,4 +1,4 @@
-    import {getDatos, getDatosPorId} from "./fetch.js"; //al estar marcadas solo con export las importo entre llaves, export default solo permite exportar 1 funcion
+    import {getDatos, getDatosPorId, putDatos} from "./fetch.js"; //al estar marcadas solo con export las importo entre llaves, export default solo permite exportar 1 funcion
     import { crearLista, detalleTopico, crearTopico ,cursosDisponibles, leftNavInicio} from "./topicos.js";
     import { obtenerUsuario,mostrarUsuarioId } from "./auth.js";
 
@@ -9,6 +9,7 @@
     const toggle = document.getElementById("theme-toggle");
     const avatarBtn = document.getElementById("avatar-btn");
     const dropdown = document.getElementById("avatar-dropdown");
+    const contenidoModal = document.getElementById("contenidoModal");
     
     let listaTopicos = [];
 
@@ -60,6 +61,14 @@
         }catch (error) {
             console.error("Error al cargar cursos:", error);
             //  podría mostrar un mensaje de error en el DOM para el usuario
+        }
+    }
+
+    const editarTopico = async (endpoint,body) =>{
+        try{
+            return await putDatos(endpoint,body);
+        }catch(err){
+            console.error("error al editar topico",err);
         }
     }
 
@@ -138,25 +147,58 @@ mainContainer.addEventListener("click", (event) =>{
     `;
     
     
-    const titulo= document.getElementById("contenidoModal").querySelector(".title").textContent;//me aseguro que la clase a la que me refiero es la que este dentro del modal
-    const mensaje= document.getElementById("contenidoModal").querySelector(".text").textContent;
+    const titulo= contenidoModal.querySelector(".title").textContent;//me aseguro que la clase a la que me refiero es la que este dentro del modal
+    const mensaje= contenidoModal.querySelector(".text").textContent;
     
-    document.getElementById("contenidoModal").querySelector(".title").innerHTML = `<input type='text' value='${titulo}' class="editar-topico" name = 'text'>`;//inner html reemplaza
-    document.getElementById("contenidoModal").querySelector(".text").innerHTML = `<textarea class="editar-topico">${mensaje}</textarea>`;
+    contenidoModal.querySelector(".title").innerHTML = `<input type='text' value='${titulo}' class="editar-topico edicion-titulo" name = 'text' >`;//inner html reemplaza
+    contenidoModal.querySelector(".text").innerHTML = `<textarea class="editar-topico edicion-mensaje" >${mensaje}</textarea>`;
 
-    document.getElementById("contenidoModal").querySelector(".title").classList.add("editar");
+    contenidoModal.querySelector(".title").classList.add("editar");
   
+    
 })
 
 //guardar cambios
-mainContainer.addEventListener("click", (e) =>{
+mainContainer.addEventListener("click", async (e) =>{
     const guardar = e.target.closest("#guardar-cambios");
     console.log(guardar)
     if(!guardar) return;
 
-    alert("cambios guardados");
+    const topico = e.target.closest("[data-topico-id]");
+    const idTopico = topico.dataset.topicoId;
     
-} )
+    const titulo = contenidoModal.querySelector(".edicion-titulo").value;
+    const mensaje= contenidoModal.querySelector(".edicion-mensaje").value;
+    console.log(mensaje)
+    
+    const edicion = JSON.stringify({titulo: titulo, mensaje:mensaje});
+
+   const edicionOk = await editarTopico(`/topicos/${idTopico}`, edicion);
+    console.log(edicionOk)
+   if(edicionOk){
+    contenidoModal.querySelector(".title").innerHTML = `${edicionOk.titulo}`;
+    contenidoModal.querySelector(".text").innerHTML = `${edicionOk.mensaje}`;
+  const accionesTopico = document.getElementById("acciones-topico");
+        accionesTopico.innerHTML = `
+         <div id='edicion-topico'>
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                </svg>
+            
+            </div>
+            <div id='eliminar-topico'>
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                </svg>
+                
+            </div>
+        `
+          inicializarLista();
+    }
+  
+   }
+    
+ )
 
 //sale del detalle de topico
 mainContainer.addEventListener("click", (event) =>{//nombre del parametro OBJETO DEL EVENTO
