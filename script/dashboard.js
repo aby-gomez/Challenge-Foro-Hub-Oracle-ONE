@@ -123,7 +123,7 @@ mainContainer.addEventListener("click", (event) =>{
    
     const accionesTopico = document.getElementById("acciones-topico");
         accionesTopico.innerHTML = `
-        <div class="guardar-cambios">
+        <div class="guardar-cambios" id ="guardar-cambios">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                 <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
             </svg>
@@ -148,20 +148,28 @@ mainContainer.addEventListener("click", (event) =>{
   
 })
 
+//guardar cambios
+mainContainer.addEventListener("click", (e) =>{
+    const guardar = e.target.closest("#guardar-cambios");
+    console.log(guardar)
+    if(!guardar) return;
+
+    alert("cambios guardados");
+    
+} )
+
 //sale del detalle de topico
 mainContainer.addEventListener("click", (event) =>{//nombre del parametro OBJETO DEL EVENTO
     const modal = document.getElementById("modalDetalle");
-    if(!modal) return;
+  
+const card = event.target.closest(".contenidoModal");
 
-   
-
- const card = event.target.closest(".contenidoModal");
-console.log(card);
 if (card) return;
 
 const edicion = event.target.closest("#edicion-topico");
-console.log(edicion)
+
 if(edicion) return;
+
      // Solo cerramos si el modal está activo
     if (modal.classList.contains("active")) {
         document.getElementById("contenidoModal").innerHTML = "";

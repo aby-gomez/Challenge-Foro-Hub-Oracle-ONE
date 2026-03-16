@@ -78,7 +78,7 @@
     color: var(--text-green);
 }
 #edicion-topico svg {
-    pointer-events: none;
+    pointer-events: none;/*para que el evento caiga en el padre no el path del svg*/
 }
 #eliminar-topico{
     color: var(--text-coral);
