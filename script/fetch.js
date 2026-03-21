@@ -85,3 +85,20 @@ export function postDatos(endpoint,body){
         }
     })
 }
+
+export function deleteDatos(endpoint){
+ return fetch (`${baseURL}${endpoint}`,{
+            method: "DELETE",
+            headers: { 
+                'Authorization': `Bearer ${token}`
+            },
+       
+})
+ .then(response => {
+        if(response.ok){
+            return response.status;
+        }else{
+        throw new Error(`Error ${response.status}`);
+        }
+    })
+}

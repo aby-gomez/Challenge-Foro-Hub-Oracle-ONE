@@ -1,5 +1,5 @@
-    import {getDatos, getDatosPorId, putDatos, postDatos} from "./fetch.js"; //al estar marcadas solo con export las importo entre llaves, export default solo permite exportar 1 funcion
-    import { crearLista, detalleTopico, crearTopico ,cursosDisponibles, leftNavInicio} from "./topicos.js";
+    import {getDatos, getDatosPorId, putDatos, postDatos,deleteDatos} from "./fetch.js"; //al estar marcadas solo con export las importo entre llaves, export default solo permite exportar 1 funcion
+    import { crearLista, detalleTopico, crearTopico ,cursosDisponibles, leftNavInicio, eliminarTopico} from "./topicos.js";
     import { obtenerUsuario,mostrarUsuarioId } from "./auth.js";
 
     let containerTopicos = document.getElementById("container");/*let porque este elemento es dinamico, al estar recargando va a cambiar varias veces hacia donde hace referencia  */ 
@@ -81,7 +81,13 @@
         }
     }
 
-    
+    const borrarTopico= async (endpoint) => {
+            try{
+            return await deleteDatos(endpoint);
+        }catch(err){
+            console.error("error al borrar topico",err);
+        }
+    }
 
 //inicio de ejecucion del script
 
@@ -115,7 +121,7 @@ mainContainer.addEventListener("click", async (event) =>{//event bublbing, hacie
                 </svg>
             
             </div>
-            <div id='eliminar-topico'>
+            <div id='eliminar-topico' >
                 <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
                     <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                 </svg>
@@ -172,7 +178,7 @@ mainContainer.addEventListener("click", (event) =>{
 
 //guardar cambios o cancelar cambios
 mainContainer.addEventListener("click", async (e) =>{
-  
+    console.log("target :",e.target)
     const guardar = e.target.closest("#guardar-cambios");
     const cancelar = e.target.closest("#cancelar-cambios");
     
@@ -247,25 +253,54 @@ mainContainer.addEventListener("click", async (e) =>{
 document.addEventListener("click", async (e) => {
     console.log(e.target)
     const borrar = e.target.closest("#eliminar-topico");
-    console.log(borrar)
+   
     const ok = e.target.closest(".ok");
     const cancelar = e.target.closest(".cancelar");
 
+    
+
     if(!borrar && !ok && !cancelar) return;
+    
+    
 
     const dialog = document.getElementById("dialogo-eliminar-topico");
 
-    if(borrar) dialog.showModal();
+    if(borrar) {
+        dialog.showModal();
+         const topico = e.target.closest("[data-topico-id]");
+         const idTopico = topico.dataset.topicoId;
+            console.log(idTopico)
+         dialog.dataset.idParaBorrar = idTopico;
+         return;
+     
+    }
     
     if(cancelar) {
-         console.log("cancelando, dialog open:", dialog.open);
+        
     dialog.close();
-    console.log("despues de close, dialog open:", dialog.open);
+   
     }
     
     if(ok) {
-        // lógica eliminar
-        dialog.close();
+        
+        const idParaBorrar = dialog.dataset.idParaBorrar;
+        console.log(idParaBorrar)
+        const okBorrado = await borrarTopico(`/topicos/${idParaBorrar}`);
+        console.log(okBorrado)
+        if(okBorrado){ 
+            const posicion = listaTopicos.findIndex(t=>t.id==idParaBorrar);
+            console.log(posicion)
+          if (posicion !== -1) {
+                 // Elimina 1 elemento empezando desde la ubicación 'posicion'
+                     listaTopicos.splice(posicion, 1); 
+                }
+            alert("topico eliminado")
+            dialog.close ();
+            
+            
+        }
+
+        
     }
     e.stopPropagation();
 })
@@ -289,6 +324,8 @@ if(acciones) return;
 
 const formCrearTopico = event.target.closest("#create-topico");
 if(formCrearTopico) return;
+
+     
 
      // Solo cerramos si el modal está activo
     if (modal.classList.contains("active")) {

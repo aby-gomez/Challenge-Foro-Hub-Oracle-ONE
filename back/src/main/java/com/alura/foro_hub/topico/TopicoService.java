@@ -56,7 +56,7 @@ public class TopicoService {
 
     //traer lista de topicos
     public Page<Topico> listarTopicos(Pageable paginacion) {
-        return topicoRepository.findAll(paginacion);
+        return topicoRepository.findAllByActivoTrue(paginacion);
     }
 
     public Page<Topico> listarTopicosConFiltro(Map<String, String> allParams,Pageable paginacion) {
@@ -71,7 +71,7 @@ public class TopicoService {
             }
         }
 
-        Page<Topico> lista = topicoRepository.findAll(filtroInicial,paginacion);
+        Page<Topico> lista = topicoRepository.findAllByActivoTrue(filtroInicial,paginacion);
         if(lista.isEmpty()){
             throw new ValidationException("No hay resultados para la busqueda");//verificar que no devuelve un error ya que no lo es
         }

@@ -159,3 +159,7 @@ export const crearTopico = (categorias) =>{
                  </div>
                 `;
  }
+
+ export const eliminarTopico =() =>{
+    
+ }
