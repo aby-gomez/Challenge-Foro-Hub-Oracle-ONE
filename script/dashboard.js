@@ -91,7 +91,7 @@
 
  //muestra detalle del topico, igual debo poner async y await por llamar al fetch de detalle topico
 mainContainer.addEventListener("click", async (event) =>{//event bublbing, haciendo click en el hijo el evento sube al padre, este contenedor
-      console.log(event.target)
+    
     // Buscamos el elemento que tenga el atributo data-id partiendo desde donde se hizo clic
     const elementoConId = event.target.closest("[data-id]");
     const imgId = event.target.closest("[data-img-id]");
@@ -137,7 +137,9 @@ mainContainer.addEventListener("click", (event) =>{
     
     const editar= event.target.closest("#edicion-topico");
 
-  
+    //left nav al borrar el main container borra hacia donde apunta la variable contenidomodal asi que debo reescribirlo constantemente
+
+    const contenidoModal = document.getElementById("contenidoModal");
    if(!editar) return;
    
     const accionesTopico = document.getElementById("acciones-topico");
@@ -168,7 +170,7 @@ mainContainer.addEventListener("click", (event) =>{
     
 })
 
-//guardar cambios
+//guardar cambios o cancelar cambios
 mainContainer.addEventListener("click", async (e) =>{
   
     const guardar = e.target.closest("#guardar-cambios");
@@ -177,6 +179,7 @@ mainContainer.addEventListener("click", async (e) =>{
     if(!guardar && !cancelar) return;
     console.log(guardar)
     console.log(cancelar)
+    const contenidoModal = document.getElementById("contenidoModal");
     const topico = e.target.closest("[data-topico-id]");
     const idTopico = topico.dataset.topicoId;
     
@@ -239,15 +242,34 @@ mainContainer.addEventListener("click", async (e) =>{
    }
     
  )
-/* //cancelar cambios
-modalDetalle.addEventListener("click",  (e) =>{
-    const cancelar = e.target.closest("#cancelar-cambios");
-    console.log(cancelar)
-    if(!cancelar) return;
 
-  
+ //borrar un topico
+document.addEventListener("click", async (e) => {
+    console.log(e.target)
+    const borrar = e.target.closest("#eliminar-topico");
+    console.log(borrar)
+    const ok = e.target.closest(".ok");
+    const cancelar = e.target.closest(".cancelar");
 
-}) */
+    if(!borrar && !ok && !cancelar) return;
+
+    const dialog = document.getElementById("dialogo-eliminar-topico");
+
+    if(borrar) dialog.showModal();
+    
+    if(cancelar) {
+         console.log("cancelando, dialog open:", dialog.open);
+    dialog.close();
+    console.log("despues de close, dialog open:", dialog.open);
+    }
+    
+    if(ok) {
+        // lógica eliminar
+        dialog.close();
+    }
+    e.stopPropagation();
+})
+
 
 //sale del detalle de topico
 mainContainer.addEventListener("click", (event) =>{//nombre del parametro OBJETO DEL EVENTO
@@ -276,23 +298,6 @@ if(formCrearTopico) return;
     
 })
     
-
-//crear topico
-// window.addEventListener("hashchange", () =>{
-//     const destino = window.location.hash;
-
-//     if (destino === "#crear-topico"){
-//         mainContainer.innerHTML="";
-//         mainContainer.insertAdjacentHTML("afterbegin", crearTopico());
-//         const crear = document.getElementById("crear-topico");
-
-//     }
-//     if(destino=== "#inicio"){
-//         window.location.href= "dashboard.html";
-//     }
-
-// })
-
 //crear topico
 mainContainer.addEventListener("submit" ,async(e) => {
     //al form se le envio el evento
@@ -335,9 +340,7 @@ leftNav.addEventListener("click", async (event) =>{
    if(event.target.closest("#inicio")){
             leftNavInicio();
 
-            //reasigno el valor de el contenedor
-            containerTopicos = document.getElementById("container");
-            // Ahora que el #container existe en el DOM, le pedimos a crearLista que lo llene
+            // le pedimos a crearLista que lo llene
             crearLista({content: listaTopicos});
         }
     if(event.target.closest("#crear-topico")){

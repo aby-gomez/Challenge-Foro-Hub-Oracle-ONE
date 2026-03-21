@@ -238,3 +238,84 @@ padding-bottom: 1rem;    /* Espacio antes de las respuestas */
     /* Opcional: una sombra muy suave para que resalte */
     box-shadow: 0 0 5px rgba(123, 97, 255, 0.2);
 }
+
+
+
+/* dialog eliminar tópico */
+
+
+dialog::backdrop {
+  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+#dialogo-eliminar-topico[open] {
+    display: flex;
+}
+#dialogo-eliminar-topico {
+    border: none;
+    border-radius: 14px;
+    padding: 2rem 2.5rem;
+    background-color: var(--white);
+    border-left: 6px solid var(--text-coral);
+    color: var(--text-color);
+    font-family: var(--font-dashboard);
+    width: 90%;
+    max-width: 24rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    flex-direction: column;
+    gap: 1.5rem;
+ margin: auto;
+    border: none;
+    border-radius: 14px;
+   
+}
+
+#dialogo-eliminar-topico p {
+    font-size: 0.9rem;
+    font-weight: var(--weight-bold);
+    color: var(--text-color);
+    text-align: center;
+}
+
+.dialog-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.8rem;
+}
+
+.dialog-buttons .ok {
+    background-color: var(--text-coral);
+    color: var(--white);
+    border: none;
+    border-radius: 14px;
+    padding: 0.6rem 1.5rem;
+    font-family: var(--font-dashboard);
+    font-size: 0.85rem;
+    font-weight: var(--weight-bold);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dialog-buttons .ok:hover {
+    background-color: var(--accent-warm);
+    transform: translateY(-2px);
+}
+
+.dialog-buttons .cancelar {
+    background-color: transparent;
+    color: var(--bg-color-lilac-dark);
+    border: 2px solid var(--bg-color-lilac);
+    border-radius: 14px;
+    padding: 0.6rem 1.5rem;
+    font-family: var(--font-dashboard);
+    font-size: 0.85rem;
+    font-weight: var(--weight-bold);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dialog-buttons .cancelar:hover {
+    border-color: var(--accent-warm);
+    color: var(--accent-warm);
+    transform: translateY(-2px);
+}

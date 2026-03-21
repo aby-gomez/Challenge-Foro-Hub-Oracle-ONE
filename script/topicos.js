@@ -155,8 +155,7 @@ export const crearTopico = (categorias) =>{
                 document.getElementById("main-container").innerHTML = `
                 <div class="card-container" id="container"></div>
                 <div id="modalDetalle">
-                <div id="contenidoModal" class="contenidoModal">
-                </div>
+                    <div id="contenidoModal" class="contenidoModal"></div>
                  </div>
                 `;
  }
