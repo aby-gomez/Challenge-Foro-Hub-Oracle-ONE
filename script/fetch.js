@@ -67,3 +67,21 @@ export function putDatos(endpoint,body){
         }
     })
 }
+
+export function postDatos(endpoint,body){
+ return fetch (`${baseURL}${endpoint}`,{
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' ,
+                'accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: body,
+})
+ .then(response => {
+        if(response.ok){
+            return response.json();
+        }else{
+        throw new Error(`Error ${response.status}`);
+        }
+    })
+}

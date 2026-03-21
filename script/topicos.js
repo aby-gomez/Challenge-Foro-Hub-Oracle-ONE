@@ -110,8 +110,8 @@ export const crearTopico = (categorias) =>{
 
                     </div>
 
-                    <div class="button-create">
-                        <button type="submit">Crear</button>
+                    <div class="button-create" id="button-create">
+                        <button type="submit" id="enviar-topico">Crear</button>
                     </div>
                     
                 </fieldset>

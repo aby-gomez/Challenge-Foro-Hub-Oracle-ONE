@@ -1,4 +1,4 @@
-    import {getDatos, getDatosPorId, putDatos} from "./fetch.js"; //al estar marcadas solo con export las importo entre llaves, export default solo permite exportar 1 funcion
+    import {getDatos, getDatosPorId, putDatos, postDatos} from "./fetch.js"; //al estar marcadas solo con export las importo entre llaves, export default solo permite exportar 1 funcion
     import { crearLista, detalleTopico, crearTopico ,cursosDisponibles, leftNavInicio} from "./topicos.js";
     import { obtenerUsuario,mostrarUsuarioId } from "./auth.js";
 
@@ -73,6 +73,14 @@
         }
     }
 
+    const putTopico = async (endpoint,body) =>{
+        try{
+            return await postDatos(endpoint,body);
+        }catch(err){
+            console.error("error al crear topico",err);
+        }
+    }
+
     
 
 //inicio de ejecucion del script
@@ -83,7 +91,7 @@
 
  //muestra detalle del topico, igual debo poner async y await por llamar al fetch de detalle topico
 mainContainer.addEventListener("click", async (event) =>{//event bublbing, haciendo click en el hijo el evento sube al padre, este contenedor
-    
+      console.log(event.target)
     // Buscamos el elemento que tenga el atributo data-id partiendo desde donde se hizo clic
     const elementoConId = event.target.closest("[data-id]");
     const imgId = event.target.closest("[data-img-id]");
@@ -162,6 +170,7 @@ mainContainer.addEventListener("click", (event) =>{
 
 //guardar cambios
 mainContainer.addEventListener("click", async (e) =>{
+  
     const guardar = e.target.closest("#guardar-cambios");
     const cancelar = e.target.closest("#cancelar-cambios");
     
@@ -245,7 +254,7 @@ mainContainer.addEventListener("click", (event) =>{//nombre del parametro OBJETO
     const modal = document.getElementById("modalDetalle");
   
 const card = event.target.closest(".contenidoModal");
-console.log(card)
+
 if (card) return;
 
 const edicion = event.target.closest("#edicion-topico");
@@ -253,8 +262,11 @@ const edicion = event.target.closest("#edicion-topico");
 if(edicion) return;
 
 const acciones = event.target.closest("#cancelar-cambios");
-console.log(event.target)
+
 if(acciones) return;
+
+const formCrearTopico = event.target.closest("#create-topico");
+if(formCrearTopico) return;
 
      // Solo cerramos si el modal está activo
     if (modal.classList.contains("active")) {
@@ -281,8 +293,38 @@ if(acciones) return;
 
 // })
 
+//crear topico
+mainContainer.addEventListener("submit" ,async(e) => {
+    //al form se le envio el evento
+    e.preventDefault();
+    console.log(e.target)
+ 
 
-//crear topico, no olvidar que el contexto debe ser async para esperar una promesa
+    const titulo = document.getElementById("text").value;
+    const mensaje = document.getElementById("msg").value;
+    const categoria = document.getElementById("categoria").value;
+    const curso = document.getElementById("curso");
+    if(!curso) return; 
+    console.log(curso)
+    const cursoOk= curso.value;
+    const topico = {titulo,mensaje, curso: {nombreCurso: cursoOk ,categoria:categoria}}
+    
+    const json = JSON.stringify(topico);
+    console.log(json)
+    const respuesta = await putTopico("/topicos",json);
+    
+    //si lanza error no habra respuesta
+    if(respuesta){
+           listaTopicos.push(respuesta);
+            alert("topico creado!");
+    }
+ 
+    const form = document.getElementById("create-topico");
+    form.reset();
+    
+})
+
+//logica left nav
 leftNav.addEventListener("click", async (event) =>{
     const link = event.target.closest('li'); // Buscamos el link más cercano
     if (!link) return;
