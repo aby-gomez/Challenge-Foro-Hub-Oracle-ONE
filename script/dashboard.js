@@ -1,7 +1,7 @@
     import {getDatos, getDatosPorId, putDatos, postDatos,deleteDatos} from "./fetch.js"; //al estar marcadas solo con export las importo entre llaves, export default solo permite exportar 1 funcion
     import { crearLista, detalleTopico, crearTopico ,cursosDisponibles, leftNavInicio, eliminarTopico} from "./topicos.js";
     import { obtenerUsuario,mostrarUsuarioId } from "./auth.js";
-
+    import{mostrarToast} from "./toast.js";
     let containerTopicos = document.getElementById("container");/*let porque este elemento es dinamico, al estar recargando va a cambiar varias veces hacia donde hace referencia  */ 
 
     const mainContainer = document.getElementById("main-container");
@@ -70,6 +70,7 @@
             return await putDatos(endpoint,body);
         }catch(err){
             console.error("error al editar topico",err);
+            
         }
     }
 
@@ -78,6 +79,7 @@
             return await postDatos(endpoint,body);
         }catch(err){
             console.error("error al crear topico",err);
+            mostrarToast("Error al crear el tópico", "error");
         }
     }
 
@@ -198,6 +200,7 @@ mainContainer.addEventListener("click", async (e) =>{
         const edicionOk = await editarTopico(`/topicos/${idTopico}`, edicion);
             console.log(edicionOk)
         if(edicionOk){
+             mostrarToast("Tópico actualizado", "success");
             contenidoModal.querySelector(".title").textContent = `${edicionOk.titulo}`;
             contenidoModal.querySelector(".text").textContent = `${edicionOk.mensaje}`;
         const accionesTopico = document.getElementById("acciones-topico");
@@ -352,7 +355,8 @@ mainContainer.addEventListener("submit" ,async(e) => {
     //si lanza error no habra respuesta
     if(respuesta){
            listaTopicos.push(respuesta);
-            alert("topico creado!");
+           mostrarToast("Tópico creado exitosamente", "success");
+            
     }
  
     const form = document.getElementById("create-topico");

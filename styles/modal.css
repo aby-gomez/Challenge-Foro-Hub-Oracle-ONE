@@ -319,3 +319,34 @@ dialog::backdrop {
     color: var(--accent-warm);
     transform: translateY(-2px);
 }
+
+
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 14px;
+    font-family: var(--font-dashboard);
+    font-size: 0.85rem;
+    font-weight: var(--weight-bold);
+    color: var(--white);
+    z-index: 2000;
+    opacity: 0;
+    transform: translateY(1rem);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.toast.success {
+    background-color: var(--text-cyan);
+}
+
+.toast.error {
+    background-color: var(--text-magenta);
+}
+
+.toast.active {
+    opacity: 1;
+    transform: translateY(0);
+}

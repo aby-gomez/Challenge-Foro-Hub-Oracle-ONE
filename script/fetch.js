@@ -1,9 +1,12 @@
+import{mostrarToast} from "./toast.js";
+
 const baseURL = 'http://localhost:8080';
 const token = localStorage.getItem("tokenJWT");
 const login = "login.html";
 
+
 const sesionExpirada = () => {
-        alert("sesion expirada");
+        mostrarToast("Sesión expirada, logeate nuevamente", "error");
         localStorage.clear();
         window.location.href= "login.html"
 }
