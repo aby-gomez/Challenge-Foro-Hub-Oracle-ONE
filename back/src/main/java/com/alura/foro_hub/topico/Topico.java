@@ -53,6 +53,7 @@ public class Topico {
         this.fechaCreacion = Instant.now();
         this.status = StatusTopico.ABIERTO;
         this.autor = usuario;
+        this.activo = true;
     }
 
     public void setCurso(Curso curso){

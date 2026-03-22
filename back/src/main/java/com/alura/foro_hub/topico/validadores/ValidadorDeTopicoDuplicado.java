@@ -13,7 +13,7 @@ public class ValidadorDeTopicoDuplicado implements ValidadorDeTopico{
 
     @Override
     public void validarTopico(DtoCrearTopico datos) {
-        boolean topicoExiste = topicoRepository.existsByTituloAndMensaje(datos.titulo(),datos.mensaje());
+        boolean topicoExiste = topicoRepository.existsByTituloAndMensajeAndActivoTrue(datos.titulo(),datos.mensaje());
         if(topicoExiste){
             throw new ValidationException("El tópico ya existe");
         }

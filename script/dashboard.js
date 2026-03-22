@@ -284,24 +284,18 @@ document.addEventListener("click", async (e) => {
     if(ok) {
         
         const idParaBorrar = dialog.dataset.idParaBorrar;
-        console.log(idParaBorrar)
         const okBorrado = await borrarTopico(`/topicos/${idParaBorrar}`);
-        console.log(okBorrado)
         if(okBorrado){ 
             const posicion = listaTopicos.findIndex(t=>t.id==idParaBorrar);
-            console.log(posicion)
+         
           if (posicion !== -1) {
                  // Elimina 1 elemento empezando desde la ubicación 'posicion'
                      listaTopicos.splice(posicion, 1); 
                 }
-            alert("topico eliminado")
             dialog.close ();
-            
-            
+            window.location.reload();
+            }
         }
-
-        
-    }
     e.stopPropagation();
 })
 

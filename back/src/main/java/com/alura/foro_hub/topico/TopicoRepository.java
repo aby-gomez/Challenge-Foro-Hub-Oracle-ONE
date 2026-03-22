@@ -1,5 +1,6 @@
 package com.alura.foro_hub.topico;
 
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -15,4 +16,6 @@ public interface TopicoRepository extends JpaRepository<Topico,Long>, JpaSpecifi
 
     Page<Topico> findAllByActivoTrue(Specification<Topico> filtroInicial, Pageable paginacion);
     Page<Topico> findAllByActivoTrue( Pageable paginacion);
+
+    boolean existsByTituloAndMensajeAndActivoTrue(String titulo, String mensaje);
 }

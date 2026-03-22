@@ -157,9 +157,16 @@ export const crearTopico = (categorias) =>{
                 <div id="modalDetalle">
                     <div id="contenidoModal" class="contenidoModal"></div>
                  </div>
+                 <dialog id="dialogo-eliminar-topico">
+                    <p>¿Estás segur@ de eliminar el tópico?</p>
+                    <div class="dialog-buttons">
+                        <button class="cancelar">Cancelar</button>
+                        <button class="ok">Si, eliminar</button>
+                    </div>
+                </dialog>
                 `;
  }
 
  export const eliminarTopico =() =>{
-    
+
  }
